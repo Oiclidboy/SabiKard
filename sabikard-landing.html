@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>SabiKard — build a deck, quiz yourself, remember it</title>
+<style>
+  :root {
+    --glass-bg: rgba(255, 255, 255, 0.14);
+    --glass-bg-strong: rgba(255, 255, 255, 0.22);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --text: #F5F6FA;
+    --text-dim: rgba(245, 246, 250, 0.72);
+    --text-faint: rgba(245, 246, 250, 0.48);
+    --accent: #7DE0D3;
+    --good: #6FE0A8;
+    --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, 'SF Pro Text', 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 15% 8%, #7C5CFF 0%, transparent 45%),
+      radial-gradient(circle at 88% 12%, #37C6D9 0%, transparent 50%),
+      radial-gradient(circle at 25% 92%, #FF7EB3 0%, transparent 45%),
+      radial-gradient(circle at 82% 88%, #4A5DFF 0%, transparent 50%),
+      #1A1730;
+    overflow-x: hidden;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0 0;
+  }
+
+  .brand { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+  .nav-cta {
+    background: var(--glass-bg-strong);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: var(--text);
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.25s var(--spring);
+  }
+  .nav-cta:active { transform: scale(0.94); }
+
+  /* Hero */
+  .hero {
+    padding: 70px 0 30px;
+    text-align: center;
+  }
+
+  .kicker {
+    display: inline-block;
+    font-size: 13px;
+    color: var(--text-dim);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--glass-border);
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+
+  h1.headline {
+    font-size: 44px;
+    line-height: 1.12;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin: 0 0 18px;
+  }
+
+  .headline .accent { color: var(--accent); }
+
+  .lede {
+    font-size: 17px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 46ch;
+    margin: 0 auto 32px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  button, input { font-family: inherit; }
+
+  .btn-primary {
+    background: var(--text);
+    color: #1A1730;
+    padding: 15px 28px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s var(--spring);
+  }
+  .btn-primary:active { transform: scale(0.94); }
+
+  .btn-ghost {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-dim);
+    padding: 15px 24px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid var(--glass-border);
+    cursor: pointer;
+    transition: transform 0.25s var(--spring);
+  }
+  .btn-ghost:active { transform: scale(0.94); }
+
+  /* Glass card base */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 40%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.15), transparent);
+    pointer-events: none;
+  }
+
+  /* Section headings */
+  .section { padding: 50px 0; }
+  .section-label {
+    font-size: 13px;
+    color: var(--text-faint);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    margin: 0 0 34px;
+    max-width: 30ch;
+  }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step {
+    padding: 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .step-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 30px;
+  }
+  .step-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .step-desc { font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media (max-width: 540px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  .price-card { padding: 26px; }
+  .price-tier { font-size: 14px; color: var(--text-dim); font-weight: 600; margin-bottom: 10px; }
+  .price-amount { font-size: 32px; font-weight: 800; margin-bottom: 4px; }
+  .price-period { font-size: 13px; color: var(--text-faint); margin-bottom: 18px; }
+  .price-features { list-style: none; padding: 0; margin: 0 0 20px; font-size: 14px; color: var(--text-dim); line-height: 2; }
+  .price-features li::before { content: "✓ "; color: var(--good); }
+
+  .price-card.featured {
+    background: linear-gradient(135deg, rgba(125,224,211,0.22), rgba(124,92,255,0.22));
+  }
+
+  .price-card button { width: 100%; }
+
+  /* Waitlist */
+  .waitlist-panel { padding: 34px 26px; text-align: center; }
+  .waitlist-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .waitlist-form input {
+    flex: 1;
+    min-width: 200px;
+    padding: 14px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.2);
+    color: var(--text);
+    font-size: 15px;
+    outline: none;
+  }
+  .waitlist-form input::placeholder { color: var(--text-faint); }
+  .waitlist-form input:focus { border-color: var(--accent); }
+
+  .thank-you { color: var(--good); font-size: 15px; font-weight: 600; margin-top: 18px; }
+
+  footer {
+    text-align: center;
+    padding: 40px 0 60px;
+    color: var(--text-faint);
+    font-size: 13px;
+  }
+
+  .footer-contact {
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .footer-contact a { color: var(--accent); text-decoration: none; }
+
+  /* Demo card (reused flip mechanic) */
+  .card-stage { perspective: 1600px; max-width: 420px; margin: 0 auto; }
+  .card {
+    position: relative;
+    min-height: 220px;
+    border-radius: 28px;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s var(--spring);
+  }
+  .card.flipped { transform: rotateY(180deg); }
+  .face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 28px;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .face-front { background: var(--glass-bg-strong); border: 1px solid var(--glass-border); backdrop-filter: blur(28px) saturate(180%); -webkit-backdrop-filter: blur(28px) saturate(180%); }
+  .face-back {
+    background: linear-gradient(135deg, rgba(125,224,211,0.35), rgba(124,92,255,0.3));
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    transform: rotateY(180deg);
+  }
+  .face-label { font-size: 12px; font-weight: 600; color: var(--text-faint); margin-bottom: 10px; }
+  .face-text { font-size: 18px; line-height: 1.5; }
+  .tap-hint { position: absolute; bottom: 16px; right: 20px; font-size: 12px; color: var(--text-faint); }
+
+  /* Compare grid */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 540px) { .compare-grid { grid-template-columns: 1fr; } }
+  .compare-card { padding: 24px; }
+  .compare-head { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+  .compare-card ul { list-style: none; padding: 0; margin: 0; font-size: 14px; color: var(--text-dim); line-height: 1.9; }
+  .compare-card.us .compare-head { color: var(--accent); }
+  .compare-card.us ul li::before { content: "✓ "; color: var(--good); }
+  .compare-card.them ul li::before { content: "– "; color: var(--text-faint); }
+
+  /* Quote */
+  .quote-card { padding: 26px 28px; }
+  .quote-text { font-size: 16px; line-height: 1.6; margin-bottom: 10px; }
+  .quote-by { font-size: 13px; color: var(--text-faint); }
+
+  /* FAQ */
+  .faq-item { padding: 0; }
+  .faq-q {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 20px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .faq-icon { font-size: 18px; color: var(--text-faint); transition: transform 0.3s var(--ease); }
+  .faq-icon.open { transform: rotate(45deg); }
+  .faq-a {
+    padding: 0 22px 20px;
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState } = React;
+
+let audioCtx = null;
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTone({ freq = 880, duration = 0.06, type = "sine", gain = 0.05, glideTo = null }) {
+  try {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const amp = ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    if (glideTo) osc.frequency.exponentialRampToValueAtTime(glideTo, ctx.currentTime + duration);
+    amp.gain.setValueAtTime(gain, ctx.currentTime);
+    amp.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+    osc.connect(amp).connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  } catch (e) {}
+}
+const click = () => playTone({ freq: 1200, duration: 0.045, type: "sine", gain: 0.04, glideTo: 900 });
+const success = () => playTone({ freq: 700, duration: 0.09, type: "sine", gain: 0.05, glideTo: 1150 });
+
+function scrollToWaitlist() {
+  click();
+  document.getElementById("waitlist").scrollIntoView({ behavior: "smooth" });
+}
+
+function WaitlistForm() {
+  const [email, setEmail] = useState("");
+  const [joined, setJoined] = useState(false);
+
+  function submit(e) {
+    e.preventDefault();
+    if (!email.trim() || !email.includes("@")) return;
+    success();
+    setJoined(true);
+  }
+
+  return (
+    <div className="glass waitlist-panel" id="waitlist">
+      <div className="section-label">Early access</div>
+      <div className="section-title" style={{ margin: "0 auto 8px", textAlign: "center" }}>
+        Be first to try SabiKard
+      </div>
+      <p className="lede" style={{ margin: "0 auto" }}>
+        We're finishing up the beta. Drop your email and we'll let you in before anyone else.
+      </p>
+      {!joined ? (
+        <form className="waitlist-form" onSubmit={submit}>
+          <input
+            type="email"
+            placeholder="you@school.edu.ng"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <button className="btn-primary" type="submit">Join waitlist</button>
+        </form>
+      ) : (
+        <div className="thank-you">You're on the list — we'll email you when SabiKard opens up. 🎉</div>
+      )}
+    </div>
+  );
+}
+
+function DemoCard() {
+  const [flipped, setFlipped] = useState(false);
+  return (
+    <div className="card-stage">
+      <div className={"card" + (flipped ? " flipped" : "")} onClick={() => { click(); setFlipped(!flipped); }}>
+        <div className="face face-front">
+          <div className="face-label">Question</div>
+          <div className="face-text">Why does chlorophyll absorbing sunlight matter for the rest of photosynthesis?</div>
+          <div className="tap-hint">Tap to reveal</div>
+        </div>
+        <div className="face face-back">
+          <div className="face-label">Answer</div>
+          <div className="face-text">It powers the splitting of water molecules, releasing oxygen and generating the ATP and NADPH the Calvin cycle needs to make glucose.</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQItem({ q, a }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="glass faq-item">
+      <button className="faq-q" onClick={() => { click(); setOpen(!open); }}>
+        {q}
+        <span className={"faq-icon" + (open ? " open" : "")}>+</span>
+      </button>
+      {open && <div className="faq-a">{a}</div>}
+    </div>
+  );
+}
+
+
+  return (
+    <div className="wrap">
+      <nav>
+        <div className="brand">SabiKard</div>
+        <button className="nav-cta" onClick={scrollToWaitlist}>Get early access</button>
+      </nav>
+
+      <div className="hero">
+        <span className="kicker">Built for students, sha</span>
+        <h1 className="headline">
+          Build your deck.<br />
+          <span className="accent">SabiKard</span> makes sure it actually sticks.
+        </h1>
+        <p className="lede">
+          Type in your own flashcards or a 4-option quiz from whatever you're studying.
+          SabiKard quizzes you on it and brings back what you keep missing — until you know it cold.
+        </p>
+        <div className="hero-ctas">
+          <button className="btn-primary" onClick={scrollToWaitlist}>Join the waitlist</button>
+          <button className="btn-ghost" onClick={click}>See how it works</button>
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="section-label">See it in action</div>
+        <div className="section-title">This is what a card looks like</div>
+        <DemoCard />
+      </div>
+
+      <div className="section">
+        <div className="section-label">How it works</div>
+        <div className="section-title">From typing it in to knowing it cold</div>
+        <div className="steps">
+          <div className="glass step">
+            <div className="step-num">01</div>
+            <div>
+              <div className="step-title">Build your deck</div>
+              <div className="step-desc">Type in flashcards, or a quiz with 4 options per question — whatever fits what you're studying.</div>
+            </div>
+          </div>
+          <div className="glass step">
+            <div className="step-num">02</div>
+            <div>
+              <div className="step-title">Study it your way</div>
+              <div className="step-desc">Flip through flashcards or take the quiz — either way, you find out what you actually know.</div>
+            </div>
+          </div>
+          <div className="glass step">
+            <div className="step-num">03</div>
+            <div>
+              <div className="step-title">Misses come back sooner</div>
+              <div className="step-desc">Get a card wrong and it resurfaces soon. Get it right a few times in a row and it's mastered.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="section-label">Why not just use Quizlet?</div>
+        <div className="section-title">Because a plain flashcard list doesn't know what you're struggling with</div>
+        <div className="compare-grid">
+          <div className="glass compare-card us">
+            <div className="compare-head">SabiKard</div>
+            <ul>
+              <li>Misses come back sooner, automatically</li>
+              <li>Flashcards or 4-option quiz, your choice</li>
+              <li>Nothing you type leaves your device</li>
+            </ul>
+          </div>
+          <div className="glass compare-card them">
+            <div className="compare-head">Typical flashcard app</div>
+            <ul>
+              <li>Same flat review order every time</li>
+              <li>Often locked behind accounts or ads</li>
+              <li>Search for someone else's deck instead</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="glass quote-card">
+          <div className="quote-text">"Built by a Nigerian university student who needed this for their own reading — for students like you."</div>
+          <div className="quote-by">— The SabiKard team</div>
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="section-label">Pricing</div>
+        <div className="section-title">Start free. Upgrade when it's worth it.</div>
+        <div className="pricing-grid">
+          <div className="glass price-card">
+            <div className="price-tier">Regular</div>
+            <div className="price-amount">Free</div>
+            <div className="price-period">forever</div>
+            <ul className="price-features">
+              <li>Build flashcard or quiz decks</li>
+              <li>Up to 10 cards per deck</li>
+              <li>Spaced repetition built in</li>
+            </ul>
+            <button className="btn-ghost" onClick={scrollToWaitlist}>Join waitlist</button>
+          </div>
+          <div className="glass price-card featured">
+            <div className="price-tier">Pro</div>
+            <div className="price-amount">₦5,000</div>
+            <div className="price-period">one-time</div>
+            <ul className="price-features">
+              <li>Unlimited cards per deck</li>
+              <li>More features as they roll out</li>
+            </ul>
+            <button className="btn-primary" onClick={scrollToWaitlist}>Join waitlist</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="section-label">FAQ</div>
+        <div className="section-title">Questions you probably have</div>
+        <div className="faq-list">
+          <FAQItem
+            q="Does it use AI to generate the questions for me?"
+            a="Not right now — you build each deck yourself, one question at a time. Auto-generating from your own reading is on the roadmap for later."
+          />
+          <FAQItem
+            q="What's the difference between Regular and Pro?"
+            a="Regular is free — build flashcard or quiz decks with up to 10 cards each. Pro (₦5,000, one-time for now) removes that cap so your decks can be as big as you need."
+          />
+          <FAQItem
+            q="How do I actually pay?"
+            a="Right now it's a direct bank transfer — once you're off the waitlist, we'll send account details. Access is confirmed manually for now while we're small, with a proper automated payment method coming as we grow."
+          />
+          <FAQItem
+            q="Is my data kept private?"
+            a="Yes — everything you type stays in your browser. Nothing is uploaded or sent anywhere, since there's no server involved in building or studying your decks."
+          />
+        </div>
+      </div>
+
+      <div className="section">
+        <WaitlistForm />
+      </div>
+
+      <footer>
+        SabiKard — built for students who read a lot and forget too fast.
+        <div className="footer-contact">Questions? <a href="mailto:henryshub4u@gmail.com">henryshub4u@gmail.com</a></div>
+      </footer>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
