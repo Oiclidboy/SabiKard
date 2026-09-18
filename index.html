@@ -124,8 +124,19 @@
     margin-top: 14px; gap: 10px; flex-wrap: wrap;
   }
 
-  button { font-family: inherit; cursor: pointer; border: none; transition: transform 0.25s var(--spring), background 0.2s var(--ease), opacity 0.2s; }
+  button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.25s var(--spring), background 0.2s var(--ease), opacity 0.2s;
+  }
   button:active { transform: scale(0.94); }
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid rgba(125, 224, 211, 0.9);
+    outline-offset: 2px;
+  }
 
   .btn-primary { background: var(--text); color: #1A1730; padding: 13px 24px; border-radius: 999px; font-size: 15px; font-weight: 600; }
   .btn-primary:disabled { opacity: 0.35; }
@@ -323,7 +334,7 @@ function levelLabel(level) { if (level === 0) return "New"; if (level === 1) ret
 function randomFrom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 const GOOD_MSGS = ["Nice one — that's sticking.", "You've got this.", "Exactly right, keep going.", "That's locking in nicely.", "You're on it!", "Solid. Onward.", "You sabi!", "Well done jare!"];
-const REVIEW_MSGS = ["No wahala, that's what review is for.", "Almost — you'll get it next round.", "That's okay, it'll come back around soon.", "Good instinct to flag it. You'll nail it next time.", "This one just needs one more pass."];
+const REVIEW_MSGS = ["No wahala, that's what review is for.", "Almost — you'll get it next round.", "That's okay, it'll come back around soon.", "Good instinct to flag it. You'll nail it next time.", "Close call — a quick review will lock it in.", "A bit of practice and that'll stick."];
 const QUIZ_CORRECT_MSGS = ["Correct — nice work.", "That's right, you know this.", "Spot on.", "Yes! Keep it up.", "You sabi!", "Well done jare!"];
 const QUIZ_WRONG_MSGS = ["Not quite — now you know for next time.", "Close, but that's alright.", "That one was tricky. Onward.", "No wahala — you'll remember this one now."];
 
@@ -342,10 +353,18 @@ function quizSummary(score, total) {
 
 // synthesized UI sound, no external audio files
 let audioCtx = null;
-function getCtx() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
+function getCtx() {
+  if (!audioCtx) {
+    const AudioCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtor) return null;
+    audioCtx = new AudioCtor();
+  }
+  return audioCtx;
+}
 function playTone({ freq = 880, duration = 0.06, type = "sine", gain = 0.05, glideTo = null }) {
   try {
     const ctx = getCtx();
+    if (!ctx) return;
     const osc = ctx.createOscillator();
     const amp = ctx.createGain();
     osc.type = type;
@@ -443,7 +462,11 @@ function App() {
       navigator.clipboard.writeText(num).then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 1800);
+      }).catch(() => {
+        window.prompt("Copy account number:", num);
       });
+    } else {
+      window.prompt("Copy account number:", num);
     }
   }
 
@@ -618,8 +641,8 @@ function App() {
       {status === "build" && (
         <div className="glass panel">
           <div className="mode-row">
-            <button className={"mode-chip" + (studyMode === "flashcards" ? " active" : "")} onClick={() => { sfx.click(); setStudyMode("flashcards"); }}>Flashcards</button>
-            <button className={"mode-chip" + (studyMode === "quiz" ? " active" : "")} onClick={() => { sfx.click(); setStudyMode("quiz"); }}>Quiz (4 options)</button>
+            <button type="button" className={"mode-chip" + (studyMode === "flashcards" ? " active" : "")} aria-pressed={studyMode === "flashcards"} onClick={() => { sfx.click(); setStudyMode("flashcards"); }}>Flashcards</button>
+            <button type="button" className={"mode-chip" + (studyMode === "quiz" ? " active" : "")} aria-pressed={studyMode === "quiz"} onClick={() => { sfx.click(); setStudyMode("quiz"); }}>Quiz (4 options)</button>
           </div>
 
           {studyMode === "flashcards" ? (
@@ -629,8 +652,8 @@ function App() {
               <div className="field-label">Answer / back</div>
               <textarea placeholder="e.g. Abuja" value={draftBack} onChange={e => setDraftBack(e.target.value)} />
               <div className="row">
-                <button className="btn-ghost" onClick={loadSampleFlashcards}>Load a sample deck</button>
-                <button className="btn-small" onClick={addFlashcard} disabled={!draftFront.trim() || !draftBack.trim() || atLimit}>Add card</button>
+                <button type="button" className="btn-ghost" onClick={loadSampleFlashcards}>Load a sample deck</button>
+                <button type="button" className="btn-small" onClick={addFlashcard} disabled={!draftFront.trim() || !draftBack.trim() || atLimit}>Add card</button>
               </div>
 
               {cards.length > 0 ? (
@@ -638,7 +661,7 @@ function App() {
                   {cards.map((c, i) => (
                     <div className="deck-item" key={i}>
                       <span className="deck-item-text">{i + 1}. {c.front}</span>
-                      <button className="deck-item-remove" onClick={() => removeCard(i)}>Remove</button>
+                      <button type="button" className="deck-item-remove" onClick={() => removeCard(i)}>Remove</button>
                     </div>
                   ))}
                 </div>
@@ -646,7 +669,7 @@ function App() {
 
               <div className="row">
                 <span className="field-label" style={{ margin: 0 }}>{cards.length} card{cards.length !== 1 ? "s" : ""} added{!isPro ? ` (max ${FREE_CARD_LIMIT})` : ""}</span>
-                <button className="btn-primary" onClick={startFlashcardStudy} disabled={cards.length === 0}>Study this deck</button>
+                <button type="button" className="btn-primary" onClick={startFlashcardStudy} disabled={cards.length === 0}>Study this deck</button>
               </div>
             </div>
           ) : (
@@ -657,7 +680,10 @@ function App() {
               {draftOptions.map((opt, i) => (
                 <div className="option-row" key={i}>
                   <button
+                    type="button"
                     className={"correct-toggle" + (draftCorrect === i ? " selected" : "")}
+                    aria-label={draftCorrect === i ? "Selected as correct answer" : "Mark as correct answer"}
+                    aria-pressed={draftCorrect === i}
                     onClick={() => { sfx.click(); setDraftCorrect(i); }}
                   >
                     {draftCorrect === i ? "✓" : ""}
@@ -667,7 +693,7 @@ function App() {
               ))}
               <div className="row">
                 <span />
-                <button className="btn-small" onClick={addQuizItem} disabled={!draftQuestion.trim() || !draftOptions.every(o => o.trim()) || atLimit}>Add question</button>
+                <button type="button" className="btn-small" onClick={addQuizItem} disabled={!draftQuestion.trim() || !draftOptions.every(o => o.trim()) || atLimit}>Add question</button>
               </div>
 
               {quizItems.length > 0 ? (
@@ -675,7 +701,7 @@ function App() {
                   {quizItems.map((q, i) => (
                     <div className="deck-item" key={i}>
                       <span className="deck-item-text">{i + 1}. {q.question}</span>
-                      <button className="deck-item-remove" onClick={() => removeQuizItem(i)}>Remove</button>
+                      <button type="button" className="deck-item-remove" onClick={() => removeQuizItem(i)}>Remove</button>
                     </div>
                   ))}
                 </div>
@@ -683,7 +709,7 @@ function App() {
 
               <div className="row">
                 <span className="field-label" style={{ margin: 0 }}>{quizItems.length} question{quizItems.length !== 1 ? "s" : ""} added{!isPro ? ` (max ${FREE_CARD_LIMIT})` : ""}</span>
-                <button className="btn-primary" onClick={startQuiz} disabled={quizItems.length === 0}>Start quiz</button>
+                <button type="button" className="btn-primary" onClick={startQuiz} disabled={quizItems.length === 0}>Start quiz</button>
               </div>
             </div>
           )}
@@ -694,7 +720,7 @@ function App() {
             <div>
               <div className="limit-strip">
                 <span>Free decks are capped at {FREE_CARD_LIMIT} cards. Pro removes the limit.</span>
-                <button className="btn-small" onClick={togglePayPanel}>{payPanelOpen ? "Hide" : "Go Pro"}</button>
+                <button type="button" className="btn-small" onClick={togglePayPanel}>{payPanelOpen ? "Hide" : "Go Pro"}</button>
               </div>
 
               {payPanelOpen && (
@@ -715,7 +741,7 @@ function App() {
                     <span className="pay-label">Account number</span>
                     <span className="pay-value">
                       0567915109
-                      <button className="copy-btn" onClick={copyAccountNumber}>{copied ? "Copied!" : "Copy"}</button>
+                      <button type="button" className="copy-btn" aria-label="Copy account number" onClick={copyAccountNumber}>{copied ? "Copied!" : "Copy"}</button>
                     </span>
                   </div>
                   <div className="pay-note">
@@ -725,12 +751,13 @@ function App() {
                     <input
                       type="text"
                       placeholder="Enter code"
+                      aria-label="Redeem code"
                       value={redeemInput}
                       onChange={e => setRedeemInput(e.target.value)}
                     />
-                    <button className="btn-small" onClick={redeemCode} disabled={!redeemInput.trim()}>Unlock</button>
+                    <button type="button" className="btn-small" onClick={redeemCode} disabled={!redeemInput.trim()}>Unlock</button>
                   </div>
-                  {redeemError && <div className="redeem-error">{redeemError}</div>}
+                  {redeemError && <div className="redeem-error" aria-live="polite">{redeemError}</div>}
                 </div>
               )}
             </div>
@@ -739,7 +766,7 @@ function App() {
           {(cards.length > 0 || quizItems.length > 0) && (
             <div className="row" style={{ marginTop: 10 }}>
               <span />
-              <button className="btn-ghost" onClick={clearDeck}>Clear deck &amp; start over</button>
+              <button type="button" className="btn-ghost" onClick={clearDeck}>Clear deck &amp; start over</button>
             </div>
           )}
         </div>
@@ -762,7 +789,12 @@ function App() {
           </div>
 
           <div className="card-stage">
-            <div className={"card" + (flipped ? " flipped" : "")} onClick={toggleFlip}>
+            <div className={"card" + (flipped ? " flipped" : "")} onClick={toggleFlip} role="button" tabIndex={0} onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                toggleFlip();
+              }
+            }} aria-label="Flip flashcard">
               <div className="face face-front">
                 <div className="level-chip">{levelLabel(levels[currentIdx])}</div>
                 <div className="face-label">Question</div>
@@ -778,11 +810,11 @@ function App() {
 
           {flipped && !judging && (
             <div className="judge-row">
-              <button className="judge-btn judge-review" onClick={() => judge("review")}>Need to review</button>
-              <button className="judge-btn judge-good" onClick={() => judge("good")}>Got it</button>
+              <button type="button" className="judge-btn judge-review" onClick={() => judge("review")}>Need to review</button>
+              <button type="button" className="judge-btn judge-good" onClick={() => judge("good")}>Got it</button>
             </div>
           )}
-          {judging && <div className="feedback-msg">{feedback}</div>}
+          {judging && <div className="feedback-msg" aria-live="polite">{feedback}</div>}
 
           <div className="mastery-note">Cards you miss come back sooner — get one right {MASTERY_LEVEL} times in a row to master it.</div>
         </div>
@@ -804,13 +836,13 @@ function App() {
                 if (i === quizItems[quizIndex].correctIndex) cls += " correct";
                 else if (i === quizSelected) cls += " wrong";
               }
-              return <button key={i} className={cls} disabled={quizSelected !== null} onClick={() => selectOption(i)}>{opt}</button>;
+              return <button type="button" key={i} className={cls} disabled={quizSelected !== null} aria-label={"Answer option " + (i + 1) + ": " + opt} onClick={() => selectOption(i)}>{opt}</button>;
             })}
           </div>
           {quizSelected !== null && (
             <div className="quiz-next-row">
-              <span className="quiz-feedback">{quizFeedback}</span>
-              <button className="btn-primary" onClick={nextQuizQuestion}>{quizIndex + 1 < quizItems.length ? "Next question" : "See results"}</button>
+              <span className="quiz-feedback" aria-live="polite">{quizFeedback}</span>
+              <button type="button" className="btn-primary" onClick={nextQuizQuestion}>{quizIndex + 1 < quizItems.length ? "Next question" : "See results"}</button>
             </div>
           )}
         </div>
@@ -824,8 +856,8 @@ function App() {
             <div className="stat review"><div className="stat-count">{missedEver}</div><div className="stat-label">total misses</div></div>
           </div>
           <div className="actions">
-            <button className="btn-primary" onClick={studyAgain}>Study this deck again</button>
-            <button className="btn-ghost" onClick={editDeck}>Edit deck</button>
+            <button type="button" className="btn-primary" onClick={studyAgain}>Study this deck again</button>
+            <button type="button" className="btn-ghost" onClick={editDeck}>Edit deck</button>
           </div>
         </div>
       )}
@@ -838,8 +870,8 @@ function App() {
             <div className="stat review"><div className="stat-count">{quizItems.length - quizScore}</div><div className="stat-label">missed</div></div>
           </div>
           <div className="actions">
-            <button className="btn-primary" onClick={retakeQuiz}>Retake this quiz</button>
-            <button className="btn-ghost" onClick={editDeck}>Edit deck</button>
+            <button type="button" className="btn-primary" onClick={retakeQuiz}>Retake this quiz</button>
+            <button type="button" className="btn-ghost" onClick={editDeck}>Edit deck</button>
           </div>
         </div>
       )}
