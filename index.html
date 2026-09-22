@@ -8,22 +8,16 @@
     :root {
       --bg: #efefe9;
       --bg-2: #e1dfd8;
-      --panel: rgba(255,255,255,0.68);
-      --panel-strong: rgba(255,255,255,0.84);
-      --line: rgba(22,24,34,0.12);
-      --line-strong: rgba(22,24,34,0.24);
+      --line: rgba(17,24,39,.12);
       --ink: #111827;
-      --muted: rgba(17,24,39,0.68);
-      --soft: rgba(17,24,39,0.48);
+      --muted: rgba(17,24,39,.7);
+      --soft: rgba(17,24,39,.48);
       --accent: #5a67ff;
       --accent-2: #6d63ff;
-      --accent-3: #3d7dff;
-      --purple: #7d5cf4;
-      --red: #ff5b5b;
-      --green: #2ccf98;
-      --shadow: 0 12px 30px rgba(20, 17, 28, 0.08);
+      --panel: rgba(255,255,255,.18);
+      --panel-strong: rgba(255,255,255,.78);
+      --shadow: 0 18px 40px rgba(17,21,36,.12);
       --radius: 26px;
-      --pill: 999px;
     }
 
     * { box-sizing: border-box; }
@@ -31,11 +25,11 @@
       margin: 0;
       min-height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-      color: var(--ink);
       background: linear-gradient(180deg, var(--bg), var(--bg-2));
+      color: var(--ink);
     }
     body {
-      padding: 20px 12px 88px;
+      padding: 20px 12px 96px;
     }
     button, input, textarea {
       font: inherit;
@@ -44,7 +38,7 @@
       cursor: pointer;
       border: 1px solid var(--line);
       color: var(--ink);
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,.2);
       transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
     }
     button:hover { transform: translateY(-1px); }
@@ -52,271 +46,60 @@
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
-    textarea, input {
-      background: rgba(255,255,255,0.28);
+    input, textarea {
+      width: 100%;
       border: 1px solid var(--line);
       border-radius: 12px;
+      background: rgba(255,255,255,.28);
       color: var(--ink);
-      width: 100%;
       padding: 12px 14px;
     }
     textarea { min-height: 100px; resize: vertical; }
 
     .app {
-      max-width: 1050px;
+      max-width: 980px;
       margin: 0 auto;
-    }
-
-    .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 8px 0 16px;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      border: 2px solid rgba(17,24,39,0.84);
-      border-radius: 999px;
-      background: rgba(0,0,0,0.96);
-      color: white;
-      padding: 10px 14px 10px 10px;
-      min-height: 58px;
-    }
-
-    .topbar .back {
-      border: 0;
-      background: transparent;
-      color: white;
-      font-size: 2rem;
-      line-height: 1;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      padding: 0;
-    }
-    .search-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex: 1;
-      min-width: 0;
-    }
-    .search-icon {
-      width: 22px;
-      height: 22px;
-      border: 2px solid rgba(255,255,255,0.85);
-      border-radius: 50%;
-      position: relative;
-      opacity: 0.9;
-      flex: 0 0 auto;
-    }
-    .search-icon::after {
-      content: "";
-      position: absolute;
-      right: -7px;
-      bottom: -5px;
-      width: 8px;
-      height: 2px;
-      background: rgba(255,255,255,0.9);
-      border-radius: 2px;
-      transform: rotate(45deg);
-    }
-    .search-text {
-      flex: 1;
-      min-width: 0;
-      background: transparent;
-      border: 0;
-      outline: none;
-      color: rgba(255,255,255,0.9);
-      font-size: 1.1rem;
-      padding: 0;
-    }
-    .search-text::placeholder { color: rgba(255,255,255,0.56); }
-    .search-action {
-      background: transparent;
-      border: 0;
-      color: rgba(255,255,255,0.92);
-      font-weight: 700;
-      font-size: 1.03rem;
-      padding: 0 6px;
     }
 
     .page {
       display: grid;
       gap: 18px;
-      animation: fadeIn .26s ease both;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: none; }
     }
 
-    .soft-card {
-      background: rgba(255,255,255,0.2);
+    .soft-card, .content-card {
+      background: rgba(255,255,255,.16);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
 
-    .mini-brand {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 6px 10px 0;
-      color: var(--muted);
-      font-size: .92rem;
-    }
-    .brand-block {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-    .brand-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #4d6ce7, #6a5cf5);
-      display: inline-block;
-      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.65);
-    }
-
     .hero {
       padding: 30px 12px 18px;
       text-align: center;
-      position: relative;
     }
     .chip-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       width: 56px;
       height: 56px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.82);
+      margin: 0 auto 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: rgba(255,255,255,.8);
       border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      font-weight: 700;
-      margin-bottom: 12px;
     }
     .hero h1 {
-      font-size: clamp(2.8rem, 7vw, 5rem);
-      line-height: 0.96;
-      letter-spacing: -0.06em;
       margin: 8px 0 10px;
-      font-weight: 900;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      letter-spacing: -.06em;
+      line-height: .96;
     }
     .hero .sub {
+      margin: 0 auto;
+      max-width: 650px;
       color: var(--muted);
       font-size: clamp(1rem, 2vw, 1.5rem);
-      font-weight: 400;
-      max-width: 650px;
-      margin: 0 auto;
       line-height: 1.35;
-    }
-
-    .feature-card {
-      position: relative;
-      border-radius: 32px;
-      padding: 20px 20px 24px;
-      background: linear-gradient(135deg, rgba(96,114,255,0.8), rgba(150,123,255,0.74));
-      border: 1px solid rgba(255,255,255,0.18);
-      overflow: hidden;
-      box-shadow: 0 24px 50px rgba(90, 83, 190, 0.18);
-      color: white;
-    }
-    .feature-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 15% 10%, rgba(255,255,255,0.32), transparent 30%);
-      pointer-events: none;
-    }
-    .feature-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 8px;
-    }
-    .moon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.85);
-      box-shadow: 0 0 0 8px rgba(255,255,255,0.08);
-      position: relative;
-    }
-    .moon::after {
-      content: "";
-      position: absolute;
-      inset: 10px 14px 10px 12px;
-      border-radius: 50%;
-      transform: translateX(10px);
-      background: rgba(120, 130, 255, 0.2);
-    }
-    .feature-title {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      line-height: 1;
-      margin: 12px 0 10px;
-      letter-spacing: -0.06em;
-      font-weight: 800;
-      text-align: center;
-    }
-    .feature-sub {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      font-size: 1.1rem;
-      opacity: 0.88;
-      margin: 0;
-    }
-    .mini-row {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 18px;
-      font-size: .85rem;
-      opacity: .9;
-    }
-    .track {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 20px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255,255,255,0.18);
-    }
-    .time-pill {
-      border-radius: 999px;
-      padding: 7px 10px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.08);
-      font-size: .8rem;
-      font-weight: 600;
     }
 
     .stats-row {
@@ -328,44 +111,98 @@
       padding: 16px 14px;
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,.18);
       text-align: center;
     }
     .stat small {
       display: block;
+      margin-bottom: 6px;
       color: var(--soft);
       text-transform: uppercase;
       font-size: .68rem;
       letter-spacing: .09em;
-      margin-bottom: 6px;
     }
     .stat strong {
       font-size: clamp(1.2rem, 3vw, 2rem);
-      letter-spacing: -0.05em;
+      letter-spacing: -.05em;
     }
 
     .content-card {
       padding: 18px 18px 16px;
-      border-radius: 28px;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
     }
 
-    .room-title {
-      font-size: clamp(1.8rem, 5vw, 3.2rem);
-      line-height: 0.96;
-      letter-spacing: -0.06em;
-      margin: 0;
-      font-weight: 900;
-    }
-    .tag-row {
+    .mini-brand {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: .92rem;
+      color: var(--muted);
+    }
+    .brand-block {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .brand-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4d6ce7, #6a5cf5);
+      display: inline-block;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.65);
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+    .item, .card-item {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      display: grid;
+      gap: 10px;
+    }
+    .card-item {
+      cursor: pointer;
+      transition: border-color .18s ease, transform .18s ease;
+    }
+    .card-item:hover {
+      border-color: rgba(90,103,255,.46);
+      transform: translateY(-1px);
+    }
+    .card-item strong {
+      font-size: 1.12rem;
+      letter-spacing: -.04em;
+    }
+    .card-item span {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .cards-header, .row, .alpha-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
-      margin: 10px 0 16px;
-      color: var(--muted);
+    }
+    .room-title {
+      margin: 0;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      letter-spacing: -.06em;
+      line-height: .96;
+      font-weight: 900;
     }
     .tag {
       display: inline-flex;
@@ -373,94 +210,36 @@
       min-height: 30px;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(17,24,39,0.04);
+      background: rgba(17,24,39,.04);
       border: 1px solid var(--line);
       font-size: .8rem;
       font-weight: 700;
     }
-    .tag.accent {
-      background: linear-gradient(135deg, rgba(93,100,255,0.12), rgba(118,87,255,0.16));
-      border-color: rgba(91,103,255,0.22);
-    }
-    .alpha-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
     .pill-button {
       border: 0;
       padding: 10px 18px;
       border-radius: 999px;
       font-weight: 700;
     }
-    .primary {
+    .pill-button.primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: white;
-      box-shadow: 0 10px 20px rgba(92,95,255,0.24);
+      box-shadow: 0 10px 20px rgba(92,95,255,.24);
     }
-    .secondary {
-      background: rgba(255,255,255,0.42);
-      border-color: var(--line);
+    .pill-button.secondary {
+      background: rgba(255,255,255,.42);
+      border: 1px solid var(--line);
       color: var(--ink);
     }
-    .ghost {
-      background: rgba(17,24,39,0.03);
-      border-color: var(--line);
-    }
 
-    .grid-2 {
+    .study-shell {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .field {
-      display: grid;
-      gap: 8px;
-    }
-    .field label {
-      font-size: .72rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--soft);
-    }
-    .stack { display: grid; gap: 16px; }
-
-    .list {
-      display: grid;
-      gap: 12px;
-    }
-    .item {
-      display: grid;
-      gap: 10px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid var(--line);
-    }
-    .item strong {
-      font-size: 1.12rem;
-      letter-spacing: -0.04em;
-    }
-    .item p {
-      margin: 0;
-      line-height: 1.5;
-      color: var(--muted);
-      white-space: pre-wrap;
-    }
-
-    .study-frame {
-      min-height: 320px;
-      display: grid;
-      place-items: center;
-      padding: 14px;
+      gap: 16px;
     }
     .study-card {
       width: min(100%, 760px);
       min-height: 270px;
+      margin: 0 auto;
       position: relative;
       display: grid;
       place-items: center;
@@ -468,7 +247,7 @@
       cursor: pointer;
       border-radius: 30px;
       border: 1px solid var(--line);
-      background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.18));
+      background: linear-gradient(135deg, rgba(255,255,255,.3), rgba(255,255,255,.18));
       box-shadow: var(--shadow);
     }
     .study-card-inner {
@@ -492,10 +271,10 @@
     }
     .card-face.back { transform: rotateY(180deg); }
     .card-face h2 {
-      font-size: clamp(2.1rem, 6vw, 3.6rem);
       margin: 0;
-      letter-spacing: -0.06em;
-      line-height: 0.96;
+      font-size: clamp(2.1rem, 6vw, 3.6rem);
+      letter-spacing: -.06em;
+      line-height: .96;
       font-weight: 900;
     }
     .card-face p {
@@ -505,42 +284,20 @@
       line-height: 1.4;
     }
 
-    .quiz-options {
+    .grid-2 {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
-    .quiz-option {
-      width: 100%;
-      text-align: left;
-      padding: 14px 16px;
-      border-radius: 14px;
-      font-weight: 600;
-      border-color: var(--line);
-      background: rgba(255,255,255,0.14);
-    }
-    .quiz-option.selected {
-      border-color: rgba(91,103,255,0.5);
-      background: rgba(91,103,255,0.08);
-      box-shadow: inset 0 0 0 1px rgba(91,103,255,0.2);
-    }
-
-    .float-action {
-      position: fixed;
-      right: 24px;
-      bottom: 96px;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #ff5e75, #ff4c5d);
-      border: 0;
+    .field {
       display: grid;
-      place-items: center;
-      color: white;
-      box-shadow: 0 14px 28px rgba(255, 95, 109, 0.26);
-      z-index: 12;
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1;
+      gap: 8px;
+    }
+    .field label {
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--soft);
     }
 
     .bottom-nav {
@@ -549,90 +306,36 @@
       transform: translateX(-50%);
       bottom: 16px;
       width: min(560px, calc(100% - 18px));
-      background: rgba(0,0,0,0.92);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,.92);
+      border: 1px solid rgba(255,255,255,.08);
       border-radius: 999px;
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
       padding: 8px;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-      z-index: 10;
+      z-index: 20;
     }
     .bottom-nav button {
       border: 0;
-      border-radius: 999px;
       background: transparent;
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,.85);
       min-height: 54px;
-      display: grid;
-      place-items: center;
-      gap: 3px;
+      border-radius: 999px;
       font-size: .7rem;
       font-weight: 700;
+      padding: 0;
     }
     .bottom-nav button.active {
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
       color: white;
     }
-    .bottom-nav .icon {
-      font-size: 1.2rem;
-      line-height: 1;
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(8, 10, 16, 0.45);
-      display: grid;
-      place-items: center;
-      padding: 16px;
-      z-index: 30;
-    }
-    .modal {
-      width: min(420px, 100%);
-      border-radius: 24px;
-      padding: 22px 18px 18px;
-      background: rgba(255,255,255,0.78);
-      border: 1px solid var(--line);
-      box-shadow: 0 20px 48px rgba(17, 21, 36, 0.2);
-    }
-    .modal h3 {
-      margin: 0 0 10px;
-      font-size: 1.7rem;
-      letter-spacing: -0.05em;
-    }
-    .modal .row {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .modal input {
-      background: rgba(17,24,39,0.04);
-    }
 
     .muted { color: var(--muted); }
-    .soft { color: var(--soft); }
     .error { color: #d23548; }
     .success { color: #0e8d5c; }
 
     @media (max-width: 700px) {
-      .grid-2,
-      .stats-row {
-        grid-template-columns: 1fr;
-      }
-      .hero h1 {
-        font-size: 3.2rem;
-      }
-      .feature-title {
-        font-size: 2.5rem;
-      }
-      .topbar {
-        border-radius: 26px;
-      }
-      .toolbar {
-        margin-top: 4px;
-      }
+      .grid-2, .stats-row { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -651,38 +354,20 @@
         hue: 'sabikard-hue',
       };
 
-      const FALLBACK = {
-        cards: [
-          { id: makeId(), front: 'What is the capital of Japan?', back: 'Tokyo.' },
-          { id: makeId(), front: 'What does HTML stand for?', back: 'HyperText Markup Language.' },
-        ],
-        quiz: [
-          { id: makeId(), question: 'Which language structures a webpage?', options: ['CSS', 'HTML', 'Python', 'SQL'], correctIndex: 1 }
-        ]
-      };
-
       const state = {
         page: 'home',
-        hue: load(STORAGE.hue, 270),
-        cards: normalizeList(load(STORAGE.cards, FALLBACK.cards), normalizeCard),
-        quiz: normalizeList(load(STORAGE.quiz, FALLBACK.quiz), normalizeQuiz),
+        cards: normalizeList(load(STORAGE.cards, []), normalizeCard),
+        quiz: normalizeList(load(STORAGE.quiz, []), normalizeQuiz),
         notes: normalizeList(load(STORAGE.notes, []), normalizeNote),
         history: Array.isArray(load(STORAGE.history, [])) ? load(STORAGE.history, []) : [],
         draftCard: { front: '', back: '' },
         draftQuiz: { question: '', options: ['', '', '', ''], correctIndex: 0 },
         noteDraft: { title: '', body: '' },
-        mode: 'cards',
         queue: [],
         queueIndex: 0,
         flipped: false,
         message: '',
         messageType: 'success',
-        quizIndex: 0,
-        selectedAnswer: null,
-        quizMessage: '',
-        menuOpen: false,
-        historyOpen: false,
-        proOpen: false,
       };
 
       function makeId() {
@@ -718,18 +403,13 @@
         save(STORAGE.quiz, state.quiz);
         save(STORAGE.notes, state.notes);
         save(STORAGE.history, state.history);
-        save(STORAGE.hue, state.hue);
       }
 
       function normalizeCard(item) {
         const front = sanitizeText(item && item.front);
         const back = sanitizeText(item && item.back);
         if (!front || !back) return null;
-        return {
-          id: item && item.id ? item.id : makeId(),
-          front,
-          back,
-        };
+        return { id: item && item.id ? item.id : makeId(), front, back };
       }
 
       function normalizeQuiz(item) {
@@ -741,12 +421,7 @@
         const correctIndex = Number.isInteger(item && item.correctIndex)
           ? Math.max(0, Math.min(Number(item.correctIndex), options.length - 1))
           : 0;
-        return {
-          id: item && item.id ? item.id : makeId(),
-          question,
-          options,
-          correctIndex,
-        };
+        return { id: item && item.id ? item.id : makeId(), question, options, correctIndex };
       }
 
       function normalizeNote(item) {
@@ -754,11 +429,7 @@
         const title = sanitizeText(item.title);
         const body = sanitizeText(item.body);
         if (!title && !body) return null;
-        return {
-          id: item.id || makeId(),
-          title: title || 'Untitled note',
-          body,
-        };
+        return { id: item.id || makeId(), title: title || 'Untitled note', body };
       }
 
       function normalizeList(list, fn) {
@@ -774,23 +445,23 @@
           .replace(/'/g, '&#039;');
       }
 
-      function attr(value) {
-        return escapeHtml(value).replace(/`/g, '&#96;');
-      }
-
       function setMessage(text, type = 'success') {
         state.message = text;
         state.messageType = type;
       }
 
-      function addHistory(type, title) {
-        state.history = [{
-          id: makeId(),
-          type,
-          title: sanitizeText(title),
-          createdAt: new Date().toISOString(),
-        }, ...state.history].slice(0, 60);
-        persist();
+      function attachDefaultDataIfNeeded() {
+        if (!state.cards.length) {
+          state.cards = [
+            { id: makeId(), front: 'What is the capital of Japan?', back: 'Tokyo.' },
+            { id: makeId(), front: 'What does HTML stand for?', back: 'HyperText Markup Language.' },
+          ];
+          persist();
+        }
+      }
+
+      function currentCard() {
+        return state.queue[state.queueIndex] || null;
       }
 
       function shuffleQueue() {
@@ -800,6 +471,7 @@
           state.flipped = false;
           return;
         }
+
         const arr = [...state.cards];
         for (let i = arr.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * (i + 1));
@@ -810,12 +482,8 @@
         state.flipped = false;
       }
 
-      function currentCard() {
-        return state.queue[state.queueIndex] || null;
-      }
-
       function renderHome() {
-        const topCards = state.cards.slice(0, 5);
+        const list = state.cards.slice(0, 10);
         return `
           <div class="page">
             <section class="hero soft-card">
@@ -825,36 +493,24 @@
             </section>
 
             <div class="stats-row">
-              <div class="stat">
-                <small>Cards</small>
-                <strong>${state.cards.length}</strong>
-              </div>
-              <div class="stat">
-                <small>Quiz</small>
-                <strong>${state.quiz.length}</strong>
-              </div>
-              <div class="stat">
-                <small>Notes</small>
-                <strong>${state.notes.length}</strong>
-              </div>
-              <div class="stat">
-                <small>Review</small>
-                <strong>${state.history.length}</strong>
-              </div>
+              <div class="stat"><small>Cards</small><strong>${state.cards.length}</strong></div>
+              <div class="stat"><small>Quiz</small><strong>${state.quiz.length}</strong></div>
+              <div class="stat"><small>Notes</small><strong>${state.notes.length}</strong></div>
+              <div class="stat"><small>Review</small><strong>${state.history.length}</strong></div>
             </div>
 
             <section class="content-card">
               <div class="mini-brand">
                 <div class="brand-block"><span class="brand-dot"></span> Your library</div>
-                <span class="soft">Saved locally</span>
+                <span class="muted">Saved locally</span>
               </div>
-              <div class="list" style="margin-top:12px;">
-                ${topCards.length ? topCards.map((card, idx) => `
-                  <div class="item">
+              <div class="list">
+                ${list.length ? list.map((card, idx) => `
+                  <button type="button" class="card-item" data-action="open-card" data-card-id="${card.id}">
                     <strong>${idx + 1}. ${escapeHtml(card.front)}</strong>
-                    <p>${escapeHtml(card.back)}</p>
-                  </div>
-                `).join('') : '<div class="item"><strong>No cards yet</strong><p>Add a flashcard to get started.</p></div>'}
+                    <span>${escapeHtml(card.back)}</span>
+                  </button>
+                `).join('') : '<div class="item"><strong>No cards yet</strong><span>Add a flashcard to get started.</span></div>'}
               </div>
             </section>
           </div>
@@ -877,30 +533,31 @@
         const current = currentCard();
         return `
           <div class="page">
-            <section class="content-card stack">
+            <section class="content-card study-shell">
               <div class="alpha-row">
                 <h2 class="room-title">Study</h2>
                 <span class="tag">${state.queueIndex + 1}/${state.queue.length}</span>
               </div>
-              <div class="study-frame">
-                <div class="study-card ${state.flipped ? 'flipped' : ''}" data-action="flip-card" tabindex="0" role="button" aria-label="Flip flashcard">
-                  <div class="study-card-inner">
-                    <div class="card-face front">
-                      <h2>${escapeHtml(current ? current.front : 'No card')}</h2>
-                    </div>
-                    <div class="card-face back">
-                      <p>${escapeHtml(current ? current.back : '')}</p>
-                    </div>
+
+              <div class="study-card ${state.flipped ? 'flipped' : ''}" data-action="flip-card" tabindex="0" role="button" aria-label="Flip flashcard">
+                <div class="study-card-inner">
+                  <div class="card-face front">
+                    <h2>${escapeHtml(current ? current.front : 'No card')}</h2>
+                  </div>
+                  <div class="card-face back">
+                    <p>${escapeHtml(current ? current.back : '')}</p>
                   </div>
                 </div>
               </div>
-              <div class="row" style="justify-content:space-between; align-items:center; flex-wrap:wrap;">
-                <span class="muted">${state.flipped ? 'Answer revealed. Rate your recall.' : 'Tap the card to reveal the answer.'}</span>
-                <button class="pill-button secondary" data-action="shuffle-study">Restart</button>
-              </div>
+
               <div class="row">
-                <button class="pill-button primary" data-action="mark-known">I knew it</button>
-                <button class="pill-button secondary" data-action="mark-review">Review later</button>
+                <span class="muted">${state.flipped ? 'Answer revealed. Rate your recall.' : 'Tap the card to reveal the answer.'}</span>
+                <button type="button" class="pill-button secondary" data-action="shuffle-study">Restart</button>
+              </div>
+
+              <div class="row">
+                <button type="button" class="pill-button primary" data-action="mark-known">I knew it</button>
+                <button type="button" class="pill-button secondary" data-action="mark-review">Review later</button>
               </div>
             </section>
           </div>
@@ -919,27 +576,22 @@
           `;
         }
 
-        const item = state.quiz[state.quizIndex];
+        const item = state.quiz[0];
         return `
           <div class="page">
-            <section class="content-card stack">
+            <section class="content-card">
               <div class="alpha-row">
                 <h2 class="room-title">Quiz</h2>
-                <span class="tag">${state.quizIndex + 1}/${state.quiz.length}</span>
+                <span class="tag">1/1</span>
               </div>
               <div>
-                <h3 style="margin:0 0 14px; font-size: clamp(1.6rem, 4vw, 2.6rem); letter-spacing:-.05em;">${escapeHtml(item.question)}</h3>
-                <div class="quiz-options">
+                <h3 style="margin: 14px 0; font-size: clamp(1.6rem, 4vw, 2.6rem); letter-spacing: -.05em;">${escapeHtml(item.question)}</h3>
+                <div class="list">
                   ${item.options.map((option, idx) => `
-                    <button class="quiz-option ${state.selectedAnswer === idx ? 'selected' : ''}" data-action="choose-answer" data-index="${idx}">${escapeHtml(option)}</button>
+                    <button type="button" class="item" data-action="choose-answer" data-index="${idx}">${escapeHtml(option)}</button>
                   `).join('')}
                 </div>
               </div>
-              <div class="row">
-                <button class="pill-button primary" data-action="answer-check">Check answer</button>
-                <button class="pill-button secondary" data-action="reset-quiz">Restart</button>
-              </div>
-              <div class="muted" style="min-height:22px;">${escapeHtml(state.quizMessage || 'Choose the best answer.')}</div>
             </section>
           </div>
         `;
@@ -948,52 +600,31 @@
       function renderCreate() {
         return `
           <div class="page">
-            <section class="content-card stack">
+            <section class="content-card">
               <div class="alpha-row">
                 <h2 class="room-title">Create</h2>
                 <div class="row">
-                  <button class="pill-button ${state.mode === 'cards' ? 'primary' : 'secondary'}" data-action="set-mode" data-mode="cards">Flashcards</button>
-                  <button class="pill-button ${state.mode === 'quiz' ? 'primary' : 'secondary'}" data-action="set-mode" data-mode="quiz">Quiz</button>
+                  <button type="button" class="pill-button primary" data-action="set-mode" data-mode="cards">Flashcards</button>
+                  <button type="button" class="pill-button secondary" data-action="set-mode" data-mode="quiz">Quiz</button>
                 </div>
               </div>
 
-              ${state.mode === 'cards' ? `
-                <div class="grid-2">
-                  <div class="field">
-                    <label>Front</label>
-                    <textarea data-field="card-front" placeholder="Front of card">${escapeHtml(state.draftCard.front)}</textarea>
-                  </div>
-                  <div class="field">
-                    <label>Back</label>
-                    <textarea data-field="card-back" placeholder="Answer">${escapeHtml(state.draftCard.back)}</textarea>
-                  </div>
+              <div class="grid-2" style="margin-top: 16px;">
+                <div class="field">
+                  <label>Front</label>
+                  <textarea data-field="card-front" placeholder="Front of card">${escapeHtml(state.draftCard.front)}</textarea>
                 </div>
-                <div class="row">
-                  <button class="pill-button primary" data-action="save-card">Save flashcard</button>
+                <div class="field">
+                  <label>Back</label>
+                  <textarea data-field="card-back" placeholder="Answer">${escapeHtml(state.draftCard.back)}</textarea>
                 </div>
-              ` : `
-                <div class="grid-2">
-                  <div class="field" style="grid-column: 1 / -1;">
-                    <label>Question</label>
-                    <textarea data-field="quiz-question" placeholder="Type a question">${escapeHtml(state.draftQuiz.question)}</textarea>
-                  </div>
-                  ${state.draftQuiz.options.map((option, idx) => `
-                    <div class="field">
-                      <label>Option ${idx + 1}</label>
-                      <input data-field="quiz-option" data-index="${idx}" value="${attr(option)}" placeholder="Option ${idx + 1}" />
-                    </div>
-                  `).join('')}
-                  <div class="field" style="grid-column: 1 / -1;">
-                    <label>Correct option</label>
-                    <input data-field="quiz-correct" type="number" min="1" max="4" value="${state.draftQuiz.correctIndex + 1}" />
-                  </div>
-                </div>
-                <div class="row">
-                  <button class="pill-button primary" data-action="save-quiz">Save question</button>
-                </div>
-              `}
+              </div>
 
-              ${state.message ? `<div class="${state.messageType === 'error' ? 'error' : 'success'}">${escapeHtml(state.message)}</div>` : ''}
+              <div class="row" style="margin-top: 16px;">
+                <button type="button" class="pill-button primary" data-action="save-card">Save flashcard</button>
+              </div>
+
+              ${state.message ? `<div class="${state.messageType === 'error' ? 'error' : 'success'}" style="margin-top: 12px;">${escapeHtml(state.message)}</div>` : ''}
             </section>
           </div>
         `;
@@ -1002,371 +633,147 @@
       function renderNotes() {
         return `
           <div class="page">
-            <section class="content-card stack">
+            <section class="content-card">
               <h2 class="room-title">Notes</h2>
-              <div class="grid-2">
+              <div class="grid-2" style="margin-top: 16px;">
                 <div class="field">
                   <label>Title</label>
-                  <input data-field="note-title" value="${attr(state.noteDraft.title)}" placeholder="Note title" />
+                  <input data-field="note-title" value="${escapeHtml(state.noteDraft.title)}" placeholder="Note title" />
                 </div>
-                <div class="field" style="grid-column: 1 / -1;">
+                <div class="field">
                   <label>Body</label>
                   <textarea data-field="note-body" placeholder="Write your note...">${escapeHtml(state.noteDraft.body)}</textarea>
                 </div>
               </div>
-              <div class="row">
-                <button class="pill-button primary" data-action="save-note">Save note</button>
+              <div class="row" style="margin-top: 16px;">
+                <button type="button" class="pill-button primary" data-action="save-note">Save note</button>
               </div>
-              <div class="list">
+              <div class="list" style="margin-top: 16px;">
                 ${state.notes.length ? state.notes.map(note => `
                   <div class="item">
-                    <div class="alpha-row">
-                      <strong>${escapeHtml(note.title)}</strong>
-                      <button class="pill-button ghost" data-action="delete-note" data-id="${note.id}">Delete</button>
-                    </div>
-                    <p>${escapeHtml(note.body || 'No details yet.')}</p>
+                    <strong>${escapeHtml(note.title)}</strong>
+                    <span>${escapeHtml(note.body || 'No details yet.')}</span>
                   </div>
-                `).join('') : '<div class="item"><strong>No notes yet</strong><p>Write something down and keep it close.</p></div>'}
+                `).join('') : '<div class="item"><strong>No notes yet</strong><span>Write something down and keep it close.</span></div>'}
               </div>
             </section>
           </div>
         `;
       }
 
-      function renderHistoryModal() {
-        if (!state.historyOpen) return '';
-        return `
-          <div class="modal-backdrop" data-action="close-history">
-            <div class="modal" onclick="event.stopPropagation()">
-              <h3>History</h3>
-              <div class="list">
-                ${state.history.length ? state.history.map(entry => `
-                  <div class="item">
-                    <div class="alpha-row">
-                      <strong>${escapeHtml(entry.type === 'quiz' ? 'Quiz' : 'Flashcard')}</strong>
-                      <span class="soft">${new Date(entry.createdAt).toLocaleDateString()}</span>
-                    </div>
-                    <p>${escapeHtml(entry.title || 'No title')}</p>
-                  </div>
-                `).join('') : '<div class="item"><strong>No history yet</strong><p>Your study sessions will appear here.</p></div>'}
-              </div>
-              <div class="row" style="justify-content:flex-end;">
-                <button class="pill-button secondary" data-action="clear-history">Clear</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
+      function render() {
+        attachDefaultDataIfNeeded();
 
-      function renderProModal() {
-        if (!state.proOpen) return '';
-        return `
-          <div class="modal-backdrop" data-action="close-pro">
-            <div class="modal" onclick="event.stopPropagation()">
-              <h3>Unlock Pro ✦</h3>
-              <p class="muted" style="margin:0;">Enter the code to unlock premium study tools.</p>
-              <div class="row">
-                <input id="pro-code" placeholder="Enter code" aria-label="Pro code" />
-                <button class="pill-button primary" data-action="unlock-pro">Unlock</button>
-              </div>
-              <p class="soft" style="margin:12px 0 0;">Demo code: <strong>SABI-7F3K9Q</strong></p>
-            </div>
-          </div>
-        `;
-      }
+        const pages = {
+          home: renderHome,
+          study: renderStudy,
+          quiz: renderQuiz,
+          create: renderCreate,
+          notes: renderNotes,
+        };
 
-      function renderApp() {
-        let content = state.page === 'study'
-          ? renderStudy()
-          : state.page === 'quiz'
-            ? renderQuiz()
-            : state.page === 'notes'
-              ? renderNotes()
-              : state.page === 'create'
-                ? renderCreate()
-                : renderHome();
-
-        const navItems = [
-          ['home', '⌂', 'Home'],
-          ['study', '◫', 'Study'],
-          ['quiz', '◌', 'Quiz'],
-          ['notes', '✎', 'Notes'],
-          ['create', '+', 'Create'],
-        ];
-
-        document.documentElement.style.setProperty('--hue', String(state.hue));
+        const content = pages[state.page] ? pages[state.page]() : renderHome();
         document.getElementById('app').innerHTML = `
-          <div class="toolbar">
-            <div class="topbar">
-              <button class="back" type="button" data-action="back">‹</button>
-              <div class="search-wrap">
-                <span class="search-icon" aria-hidden="true"></span>
-                <input class="search-text" placeholder="Find related content" value="" />
-              </div>
-              <button class="search-action" type="button">Search</button>
-            </div>
-          </div>
-
-          <div class="mini-brand">
-            <div class="brand-block"><span class="brand-dot"></span> Iconly</div>
-            <span class="soft">Icon Set</span>
-          </div>
-
           ${content}
-          ${renderHistoryModal()}
-          ${renderProModal()}
-
-          <button class="float-action" data-action="show-pro" aria-label="Open Pro">＋</button>
           <nav class="bottom-nav" aria-label="Main navigation">
-            ${navItems.map(([id, icon, label]) => `
-              <button type="button" class="${state.page === id ? 'active' : ''}" data-action="page" data-page="${id}">
-                <span class="icon">${icon}</span>
-                <span>${label}</span>
-              </button>
-            `).join('')}
+            <button type="button" class="${state.page === 'home' ? 'active' : ''}" data-action="set-page" data-page="home">Home</button>
+            <button type="button" class="${state.page === 'study' ? 'active' : ''}" data-action="set-page" data-page="study">Study</button>
+            <button type="button" class="${state.page === 'quiz' ? 'active' : ''}" data-action="set-page" data-page="quiz">Quiz</button>
+            <button type="button" class="${state.page === 'create' ? 'active' : ''}" data-action="set-page" data-page="create">Create</button>
+            <button type="button" class="${state.page === 'notes' ? 'active' : ''}" data-action="set-page" data-page="notes">Notes</button>
           </nav>
         `;
       }
 
-      function saveCard() {
-        const front = sanitizeText(state.draftCard.front);
-        const back = sanitizeText(state.draftCard.back);
-        if (!front || !back) {
-          setMessage('Enter both the front and back of the card.', 'error');
-          renderApp();
-          return;
-        }
-        state.cards.unshift({ id: makeId(), front, back });
-        state.draftCard = { front: '', back: '' };
-        setMessage('Flashcard saved.', 'success');
-        persist();
-        renderApp();
-      }
+      document.addEventListener('click', (event) => {
+        const target = event.target.closest('[data-action]');
+        if (!target) return;
 
-      function saveQuiz() {
-        const question = sanitizeText(state.draftQuiz.question);
-        const options = state.draftQuiz.options.map(v => sanitizeText(v));
-        if (!question || options.some(v => !v)) {
-          setMessage('Please fill in the question and all 4 options.', 'error');
-          renderApp();
-          return;
-        }
-        const correctIndex = Math.min(Math.max(Number(state.draftQuiz.correctIndex) || 0, 0), 3);
-        state.quiz.unshift({
-          id: makeId(),
-          question,
-          options,
-          correctIndex,
-        });
-        state.draftQuiz = { question: '', options: ['', '', '', ''], correctIndex: 0 };
-        setMessage('Quiz question saved.', 'success');
-        persist();
-        renderApp();
-      }
+        const action = target.dataset.action;
 
-      function saveNote() {
-        const title = sanitizeText(state.noteDraft.title);
-        const body = sanitizeText(state.noteDraft.body);
-        if (!title && !body) {
-          setMessage('Write a title or note first.', 'error');
-          renderApp();
-          return;
-        }
-        state.notes.unshift({
-          id: makeId(),
-          title: title || 'Untitled note',
-          body,
-        });
-        state.noteDraft = { title: '', body: '' };
-        setMessage('Note saved.', 'success');
-        persist();
-        renderApp();
-      }
-
-      function handleCardKnown() {
-        const card = currentCard();
-        if (card) addHistory('card', card.front);
-        state.queueIndex += 1;
-        if (state.queueIndex >= state.queue.length) shuffleQueue();
-        state.flipped = false;
-        renderApp();
-      }
-
-      function handleCheckAnswer() {
-        if (state.selectedAnswer === null) {
-          setMessage('Choose an answer before checking.', 'error');
-          renderApp();
-          return;
-        }
-        const current = state.quiz[state.quizIndex];
-        if (!current) return;
-        const isCorrect = state.selectedAnswer === current.correctIndex;
-        state.quizMessage = isCorrect
-          ? 'Correct — nice memory.'
-          : `Not quite — the right answer is: ${current.options[current.correctIndex]}`;
-        addHistory('quiz', current.question);
-        state.quizIndex = (state.quizIndex + 1) % state.quiz.length;
-        state.selectedAnswer = null;
-        renderApp();
-      }
-
-      appEventHandlers();
-      if (state.cards.length) shuffleQueue();
-      renderApp();
-
-      function appEventHandlers() {
-        document.addEventListener('click', (event) => {
-          const target = event.target.closest('[data-action]');
-          if (!target) return;
-          const action = target.dataset.action;
-
-          if (action === 'page') {
-            state.page = target.dataset.page;
-            state.menuOpen = false;
-            state.historyOpen = false;
-            renderApp();
-            return;
+        switch (action) {
+          case 'set-page': {
+            state.page = target.dataset.page || 'home';
+            render();
+            break;
           }
-
-          if (action === 'set-mode') {
-            state.mode = target.dataset.mode;
-            renderApp();
-            return;
-          }
-
-          if (action === 'save-card') {
-            saveCard();
-            return;
-          }
-
-          if (action === 'save-quiz') {
-            saveQuiz();
-            return;
-          }
-
-          if (action === 'save-note') {
-            saveNote();
-            return;
-          }
-
-          if (action === 'delete-note') {
-            const id = target.dataset.id;
-            state.notes = state.notes.filter(note => note.id !== id);
-            persist();
-            renderApp();
-            return;
-          }
-
-          if (action === 'mark-known') {
-            handleCardKnown();
-            return;
-          }
-
-          if (action === 'mark-review') {
-            state.queueIndex += 1;
-            if (state.queueIndex >= state.queue.length) shuffleQueue();
+          case 'open-card': {
+            const card = state.cards.find(item => item.id === target.dataset.cardId);
+            if (!card) return;
+            state.queue = [card];
+            state.queueIndex = 0;
             state.flipped = false;
-            renderApp();
-            return;
+            state.page = 'study';
+            render();
+            break;
           }
-
-          if (action === 'shuffle-study') {
-            shuffleQueue();
-            renderApp();
-            return;
-          }
-
-          if (action === 'flip-card') {
+          case 'flip-card': {
             state.flipped = !state.flipped;
-            renderApp();
-            return;
+            render();
+            break;
           }
-
-          if (action === 'choose-answer') {
-            state.selectedAnswer = Number(target.dataset.index);
-            renderApp();
-            return;
+          case 'shuffle-study': {
+            shuffleQueue();
+            render();
+            break;
           }
-
-          if (action === 'answer-check') {
-            handleCheckAnswer();
-            return;
-          }
-
-          if (action === 'reset-quiz') {
-            state.quizIndex = 0;
-            state.selectedAnswer = null;
-            state.quizMessage = '';
-            renderApp();
-            return;
-          }
-
-          if (action === 'show-pro') {
-            state.proOpen = true;
-            renderApp();
-            return;
-          }
-
-          if (action === 'close-pro') {
-            state.proOpen = false;
-            renderApp();
-            return;
-          }
-
-          if (action === 'unlock-pro') {
-            const code = document.getElementById('pro-code')?.value || '';
-            if (sanitizeText(code) === 'SABI-7F3K9Q') {
-              state.proOpen = false;
-              setMessage('Pro unlocked.', 'success');
-              renderApp();
-            } else {
-              setMessage('That code is not valid.', 'error');
-              renderApp();
+          case 'mark-known': {
+            if (state.queue.length) {
+              state.cards = state.cards.filter(card => card.id !== state.queue[state.queueIndex].id);
+              state.queue = state.cards.slice();
+              state.queueIndex = 0;
+              state.flipped = false;
+              persist();
+              render();
             }
-            return;
+            break;
           }
-
-          if (action === 'back') {
-            if (state.page !== 'home') state.page = 'home';
-            else if (state.historyOpen) state.historyOpen = false;
-            renderApp();
-            return;
-          }
-
-          if (action === 'clear-history') {
-            state.history = [];
+          case 'save-card': {
+            const front = sanitizeText(document.querySelector('[data-field="card-front"]').value);
+            const back = sanitizeText(document.querySelector('[data-field="card-back"]').value);
+            if (!front || !back) {
+              setMessage('Both the front and back are required.', 'error');
+              render();
+              return;
+            }
+            state.cards.push({ id: makeId(), front, back });
+            state.draftCard = { front: '', back: '' };
+            setMessage('Flashcard saved.', 'success');
             persist();
-            state.historyOpen = false;
-            renderApp();
-            return;
+            render();
+            break;
           }
+          case 'save-note': {
+            const title = sanitizeText(document.querySelector('[data-field="note-title"]').value);
+            const body = sanitizeText(document.querySelector('[data-field="note-body"]').value);
+            if (!title && !body) {
+              setMessage('Write a note before saving.', 'error');
+              render();
+              return;
+            }
+            state.notes.push({ id: makeId(), title: title || 'Untitled note', body });
+            state.noteDraft = { title: '', body: '' };
+            setMessage('Note saved.', 'success');
+            persist();
+            render();
+            break;
+          }
+          default:
+            break;
+        }
+      });
 
-          if (action === 'close-history') {
-            state.historyOpen = false;
-            renderApp();
-            return;
-          }
-        });
+      document.addEventListener('input', (event) => {
+        const field = event.target.dataset.field;
+        if (!field) return;
 
-        document.addEventListener('input', (event) => {
-          const field = event.target.dataset.field;
-          if (!field) return;
+        if (field === 'card-front') state.draftCard.front = event.target.value;
+        if (field === 'card-back') state.draftCard.back = event.target.value;
+        if (field === 'note-title') state.noteDraft.title = event.target.value;
+        if (field === 'note-body') state.noteDraft.body = event.target.value;
+      });
 
-          if (field === 'card-front') state.draftCard.front = event.target.value;
-          if (field === 'card-back') state.draftCard.back = event.target.value;
-          if (field === 'quiz-question') state.draftQuiz.question = event.target.value;
-          if (field === 'quiz-correct') {
-            const value = Number(event.target.value) || 1;
-            state.draftQuiz.correctIndex = Math.min(Math.max(value - 1, 0), 3);
-          }
-          if (field === 'quiz-option') {
-            const index = Number(event.target.dataset.index);
-            state.draftQuiz.options[index] = event.target.value;
-          }
-          if (field === 'note-title') state.noteDraft.title = event.target.value;
-          if (field === 'note-body') state.noteDraft.body = event.target.value;
-        });
-      }
+      render();
     })();
   </script>
 </body>
