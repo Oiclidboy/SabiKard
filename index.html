@@ -1,52 +1,1309 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>SabiKard</title>
-<style>
-:root{--hue:270;--bg:#120b24;--bg2:#261052;--glass:rgba(255,255,255,.13);--line:rgba(255,255,255,.3);--text:#f8f5ff;--dim:rgba(248,245,255,.72);--faint:rgba(248,245,255,.48);--accent:hsl(var(--hue) 90%,60%,60%);--accent-soft:hsla(var(--hue),90%,60%,.18);--danger:#ff586d;--ok:#7ae8b2;--warn:#f7d77d;--shadow:rgba(4,0,15,.45)}
-@media(prefers-color-scheme:light){:root{--bg:#eeeaff;--bg2:#c7b9ed;--glass:rgba(255,255,255,.38);--line:rgba(55,35,100,.22);--text:#251743;--dim:rgba(37,23,67,.72);--faint:rgba(37,23,67,.5);--accent:hsl(var(--hue) 78%,58%,54%)} }
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;min-height:100%;font-family:-apple-system,'SF Pro Text','Inter',system-ui,sans-serif;color:var(--text)}body{padding:20px;background:radial-gradient(circle at top,#4c2c86 0%,var(--bg) 42%,var(--bg2) 100%);background-attachment:fixed;min-height:100vh;display:flex;align-items:center;justify-content:center}.glass{background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}#root{width:min(1100px,100%);display:flex;justify-content:center}.app-shell{width:min(1100px,100%);display:flex;flex-direction:column;gap:16px}.header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:18px}.brand-row{display:flex;align-items:center;gap:12px}.brand-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),#fff6);font-weight:900;box-shadow:0 10px 25px rgba(127,97,255,.28)}.brand-txt{display:flex;flex-direction:column;line-height:1.1}.brand-title{font-size:clamp(1.3rem,2vw,1.8rem);font-weight:800;letter-spacing:.04em}.brand-sub{font-size:.74rem;color:var(--dim)}.header-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.hue-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.swatch{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.38);box-shadow:0 0 0 1px rgba(0,0,0,.12)}.swatch.active{outline:2px solid rgba(255,255,255,.7);outline-offset:2px}.page-btn,.pill,.chip,.mini-btn,.primary,.secondary{border:none;border-radius:12px;padding:10px 12px;font:inherit;color:var(--text);cursor:pointer;transition:.2s ease}.page-btn,.pill,.chip{background:rgba(255,255,255,.06);border:1px solid var(--line)}.page-btn.active,.chip.active{background:var(--accent-soft);border-color:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.panel{border-radius:22px;padding:18px}.main{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.stack{display:flex;flex-direction:column;gap:16px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:8px}.input,.textarea,.select{width:100%;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--text);font:inherit;resize:vertical}.textarea{min-height:90px}.input::placeholder,.textarea::placeholder{color:var(--faint)}.mode-row{display:flex;gap:8px;flex-wrap:wrap}.mode-chip{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--text);cursor:pointer}.mode-chip.active{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.04));border-color:rgba(255,255,255,.25)}.list{display:flex;flex-direction:column;gap:10px}.deck-item{display:flex;justify-content:space-between;gap:12px;padding:12px 14px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:14px}.deck-item .meta{display:flex;flex-direction:column;gap:4px}.deck-text{font-weight:600;line-height:1.4}.small{font-size:.8rem;color:var(--dim)}.trash{background:rgba(255,88,109,.12);border:1px solid rgba(255,88,109,.4);border-radius:10px;color:#ffd9df;padding:8px 10px;cursor:pointer}.status-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:12px}.badge{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);font-size:.75rem;color:var(--dim)}.flashcard-stage{display:grid;place-items:center;padding:18px 12px;min-height:260px}.flashcard{width:min(100%,420px);min-height:220px;display:grid;place-items:center;padding:20px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.04));cursor:pointer;box-shadow:0 24px 48px rgba(0,0,0,.18);user-select:none;transition:transform .2s ease}.flashcard:hover{transform:translateY(-2px)}.flashcard-inner{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}.flashcard .large{font-size:clamp(1.2rem,2vw,1.9rem);font-weight:700;line-height:1.4}.flashcard .tiny{font-size:.8rem;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}.quiz-card{display:flex;flex-direction:column;gap:16px}.quiz-option{width:100%;text-align:left;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);font:inherit;cursor:pointer}.quiz-option.correct{background:rgba(122,232,178,.14);border-color:rgba(122,232,178,.8)}.quiz-option.wrong{background:rgba(255,88,109,.12);border-color:rgba(255,88,109,.75)}.quiz-option.selected{box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}.note-item{padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04)}.note-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.note-body{margin-top:8px;color:var(--dim);white-space:pre-wrap}.limit-strip{border:1px solid #70e0aa77;background:#70e0aa18;color:#dffef1;border-radius:12px;padding:10px 12px;font-size:.92rem}.pro-box{display:flex;flex-direction:column;gap:10px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.04)}.pro-box input{color:var(--text)}.hidden{display:none!important}.spark{position:fixed;pointer-events:none;animation:pop .8s ease forwards;font-size:12px;color:#fff;transform:translate(-50%,-50%)}@keyframes pop{0%{opacity:1;transform:translate(-50%,-50%) scale(.7)}100%{opacity:0;transform:translate(calc(-50% + var(--dx,0px)),calc(-50% + var(--dy,-18px))) scale(1.5)}}
-</style></head>
-<body><div id="root"></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script><script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type="text/babel">
-const {useState,useEffect}=React;const LIMIT=10,MASTERED=3,PRO_CODE='SABI-7F3K9Q';const KEYS={cards:'sabikard-cards',quiz:'sabikard-quizItems',history:'sabikard-questionHistory',notes:'sabikard-notes',mode:'sabikard-mode',hue:'sabikard-hue',levels:'sabikard-levels',queue:'sabikard-queue',status:'sabikard-status',pro:'sabikard-pro'};
-const GOOD=['Nice one! That\'s sticking.','Exactly right, keep going.','You\'ve got this.'];const REVIEW=['Almost — that\'s a good review cue.','Close! One more pass and it clicks.','Nice instinct, keep going.'];
-function safeLoad(key, fallback) {
-  try {
-    const value = localStorage.getItem(key);
-    if (value === null) return fallback;
-    return JSON.parse(value);
-  } catch (error) {
-    try { localStorage.removeItem(key); } catch (e) {}
-    return fallback;
-  }
-}
-function safeSave(key, value) {
-  try { localStorage.setItem(key, JSON.stringify(value)); return true; }
-  catch (error) { return false; }
-}
-function sanitizeText(value) { return String(value ?? '').trim(); }
-function makeId() { if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID(); return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10); }
-function normalizeCard(item, fallbackIndex) { const front = sanitizeText(item && item.front); const back = sanitizeText(item && item.back); if (!front || !back) return null; return {id:item && item.id ? item.id : makeId(), type:'card', front, back, createdAt:item && item.createdAt ? item.createdAt : new Date().toISOString(), index:fallbackIndex}; }
-function normalizeQuiz(item, fallbackIndex) { const question = sanitizeText(item && item.question); const options = Array.isArray(item && item.options) ? item.options.map(v => sanitizeText(v)).filter(Boolean) : []; const correctIndex = Number(item && item.correctIndex); if (!question || options.length < 2 || Number.isNaN(correctIndex) || correctIndex < 0 || correctIndex >= options.length) return null; return {id:item && item.id ? item.id : makeId(), type:'quiz', question, options, correctIndex, createdAt:item && item.createdAt ? item.createdAt : new Date().toISOString(), index:fallbackIndex}; }
-function normalizeHistory(item) { if (!item || typeof item !== 'object') return null; const type = item.type === 'quiz' || item.type === 'card' ? item.type : 'card'; const content = type === 'card' ? sanitizeText(item.front) : sanitizeText(item.question); if (!content) return null; return {id:item.id || makeId(), type, front:type === 'card' ? content : item.front || '', question:type === 'quiz' ? content : item.question || '', back:item.back || '', options:Array.isArray(item.options) ? item.options.map(v => sanitizeText(v)).filter(Boolean) : [], correctIndex:Number(item.correctIndex) || 0, createdAt:item.createdAt || new Date().toISOString()}; }
-function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function buzz(ms=25){if(navigator.vibrate)try{navigator.vibrate(ms)}catch{}}
-function Button(props){return <button type="button" {...props} onClick={e=>{spark(e);props.onClick&&props.onClick(e)}}>{props.children}</button>}
-function spark(e){const n=6;for(let i=0;i<n;i++){const s=document.createElement('span');s.className='spark';s.textContent=i%2?'✦':'·';s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.setProperty('--dx',(Math.random()*30-15)+'px');s.style.setProperty('--dy',(-18-Math.random()*18)+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),800)}}
-function addHistory(history, item) { const subject = normalizeHistory(item); if (!subject) return history; const next = [subject, ...history.filter(it => it && it.id !== subject.id)].slice(0, 60); return next; }
-function Header({name,hue,setHue,setPage,page}){const colors=[270,220,185,145,315],labels={270:'Purple',220:'Blue',185:'Cyan',145:'Neon',315:'Magenta'};return <header className="header glass"><div className="brand-row"><div className="brand-mark" style={{background:'linear-gradient(135deg,hsl('+hue+' 90% 62%), rgba(255,255,255,.35))'}}>{name.slice(0,1).toUpperCase()}</div><div className="brand-txt"><div className="brand-title">SabiKard</div><div className="brand-sub">Study with rhythm</div></div></div><div className="header-controls"><div className="hue-row">{colors.map(c => <button key={c} type="button" className={`swatch ${c===hue?'active':''}`} style={{background:'hsl('+c+' 90% 62%)'}} onClick={()=>setHue(c)} aria-label={labels[c]} title={labels[c]} />)}</div><button type="button" className={`page-btn ${page==='builder'?'active':''}`} onClick={()=>setPage('builder')}>Create</button><button type="button" className={`page-btn ${page==='study'?'active':''}`} onClick={()=>setPage('study')}>Study</button></div></header>}
-function Pro({isPro,open,setOpen}){const [code,setCode]=useState(''),[error,setError]=useState('');if(isPro)return <div className="limit-strip">Pro unlocked ✨</div>; return <div className="pro-box glass"><div style={{fontWeight:700}}>Unlock Pro</div><div className="small">Enter your code to remove limits.</div><input className="input" value={code} onChange={e=>setCode(e.target.value)} placeholder="SABI-7F3K9Q" /><div className="row"><button type="button" className="primary" style={{background:'linear-gradient(135deg,var(--accent),#fff1)',border:'1px solid rgba(255,255,255,.18)',padding:'10px 14px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>{if(code.trim().toUpperCase()===PRO_CODE){setOpen(true);setError('');_savePro();}else setError('Invalid code');}}>Unlock</button><button type="button" className="secondary" style={{background:'rgba(255,255,255,.04)',border:'1px solid var(--line)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>setOpen(false)}>Close</button></div>{error && <div style={{color:'#ffd6dc',fontSize:'.8rem'}}>{error}</div>}</div>; function _savePro(){safeSave(KEYS.pro,true);} }
-function List({items,type,remove}){return items.length ? <div className="list">{items.map((x,i)=><div className="deck-item" key={x.id||i}><div className="meta"><div className="deck-text">{i+1}. {type==='card' ? x.front : x.question}</div><div className="small">{type==='card' ? 'Flashcard' : 'Quiz'}</div></div><button type="button" className="trash" onClick={()=>remove(x.id)}>Remove</button></div>)}</div> : <div className="small">No items yet.</div>}
-function Builder({mode,setMode,cards,setCards,quiz,setQuiz,history,setHistory,isPro,setPage}){const [front,setFront]=useState(''),[back,setBack]=useState(''),[question,setQuestion]=useState(''),[opts,setOpts]=useState(['','']),[correct,setCorrect]=useState(0),[status,setStatus]=useState('');const limit = isPro ? 999 : LIMIT;const canAddCard = cards.length < limit; const canAddQuiz = quiz.length < limit; function addCard(){if(!front.trim() || !back.trim() || !canAddCard) return; const item={id:makeId(),type:'card',front:front.trim(),back:back.trim(),createdAt:new Date().toISOString()}; setCards(prev => [...prev, item]); setHistory(prev => addHistory(prev, item)); setFront(''); setBack(''); setStatus('Flashcard added.'); }
-function addQuiz(){if(!question.trim() || opts.some(x => !x.trim()) || !canAddQuiz) return; const item={id:makeId(),type:'quiz',question:question.trim(),options:opts.map(x=>x.trim()),correctIndex:correct,createdAt:new Date().toISOString()}; setQuiz(prev => [...prev, item]); setHistory(prev => addHistory(prev, item)); setQuestion(''); setOpts(['','']); setCorrect(0); setStatus('Quiz added.'); }
-return <div className="glass panel stack"><div className="mode-row"><button type="button" className={`mode-chip ${mode==='cards'?'active':''}`} onClick={()=>setMode('cards')}>Flashcards</button><button type="button" className={`mode-chip ${mode==='quiz'?'active':''}`} onClick={()=>setMode('quiz')}>Quiz</button></div>{status && <div className="status-bar"><span>{status}</span><button type="button" className="mini-btn" style={{background:'rgba(255,255,255,.04)',border:'1px solid var(--line)',padding:'8px 10px',borderRadius:10,color:'var(--text)',cursor:'pointer'}} onClick={()=>setStatus('')}>Dismiss</button></div>}{mode==='cards' ? <div className="field"><input className="input" value={front} onChange={e=>setFront(e.target.value)} placeholder="Front of card"/><textarea className="textarea" value={back} onChange={e=>setBack(e.target.value)} placeholder="Back of card"/><div className="row"><button type="button" className="primary" style={{background:'linear-gradient(135deg,var(--accent),#fff1)',border:'1px solid rgba(255,255,255,.18)',padding:'10px 14px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={addCard} disabled={!canAddCard}>{canAddCard ? 'Add Flashcard' : 'Limit reached'}</button></div></div> : <div className="field"><input className="input" value={question} onChange={e=>setQuestion(e.target.value)} placeholder="Quiz question"/>{opts.map((opt,i)=><div key={i} className="row"><input className="input" value={opt} onChange={e=>{const next=[...opts];next[i]=e.target.value;setOpts(next)}} placeholder={'Option ' + (i+1)}/><button type="button" className={`pill ${correct===i?'active':''}`} onClick={()=>setCorrect(i)}>Correct</button></div>)}<div className="row"><button type="button" className="secondary" style={{background:'rgba(255,255,255,.04)',border:'1px solid var(--line)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>setOpts(prev => [...prev, ''])}>Add option</button><button type="button" className="primary" style={{background:'linear-gradient(135deg,var(--accent),#fff1)',border:'1px solid rgba(255,255,255,.18)',padding:'10px 14px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={addQuiz} disabled={!canAddQuiz}>{canAddQuiz ? 'Add Quiz' : 'Limit reached'}</button></div></div>}<div className="status-bar"><span>{cards.length + quiz.length} total cards</span><button type="button" className="page-btn" onClick={()=>setPage('study')}>Study now</button></div></div>}
-function Notes({notes,setNotes}){const [title,setTitle]=useState(''),[body,setBody]=useState(''),[editing,setEditing]=useState(null); function saveNote(){if(!title.trim() && !body.trim()) return; const item={id:editing?.id || makeId(), title:title.trim() || 'Note', body:body.trim(), createdAt:new Date().toISOString()}; setNotes(prev => editing ? prev.map(n => n.id===editing.id ? item : n) : [item,...prev]); setTitle(''); setBody(''); setEditing(null); } function removeNote(id){setNotes(prev => prev.filter(n => n.id !== id)); if(editing && editing.id===id) {setEditing(null); setTitle(''); setBody('');}} return <div className="glass panel stack"><div className="row"><input className="input" value={title} onChange={e=>setTitle(e.target.value)} placeholder="Note title"/><button type="button" className="primary" style={{background:'linear-gradient(135deg,var(--accent),#fff1)',border:'1px solid rgba(255,255,255,.18)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={saveNote}>{editing ? 'Update' : 'Save'}</button></div><textarea className="textarea" value={body} onChange={e=>setBody(e.target.value)} placeholder="Write something useful..."/>{notes.length ? notes.map(note => <div key={note.id} className="note-item"><div className="note-head"><strong>{note.title}</strong><div className="row"><button type="button" className="chip" onClick={()=>{setEditing(note); setTitle(note.title); setBody(note.body);}}>Edit</button><button type="button" className="trash" onClick={()=>removeNote(note.id)}>Delete</button></div></div><div className="note-body">{note.body}</div></div>) : <div className="small">No notes yet.</div>}</div>}
-function Cards({cards,levels,setLevels,queue,setQueue,finish}){const [flip,setFlip]=useState(false),[busy,setBusy]=useState(false),[misses,setMisses]=useState(0),[message,setMessage]=useState(''); const total = cards.length; const nextCard = () => { if (!queue.length) return; const [index, ...rest] = queue; setQueue(rest); setFlip(false); setBusy(false); setMisses(0); setMessage(''); if (cards[index]) finish(cards[index], 'card'); }; useEffect(()=>{if(!cards.length){setQueue([]);return;} if(queue.length===0){setQueue(cards.map((_,i)=>i));}},[cards,queue,setQueue]); if (!cards.length) return <div className="glass panel"><div className="small">No flashcards to study.</div></div>; const index = queue[0]; const card = cards[index]; const markLevel = (dir) => { const current = levels[index] || 0; const next = Math.max(0, Math.min(MASTERED, current + (dir === 'good' ? 1 : -1))); setLevels(prev => { const copy = [...prev]; copy[index] = next; return copy; }); if (dir === 'good') { setMessage(pick(GOOD)); buzz(30); } else { setMessage(pick(REVIEW)); setMisses(m => m + 1); buzz(18); }
-  setTimeout(() => { nextCard(); }, 650); }; if (!card) return null; return <div className="glass panel stack"><div className="status-bar"><span>{queue.length} remain</span><span className="badge">{misses} misses</span></div><div className="flashcard-stage"><div className="flashcard" onClick={()=>setFlip(v=>!v)}><div className="flashcard-inner"><div className="tiny">{flip ? 'Answer' : 'Question'}</div><div className="large">{flip ? card.back : card.front}</div></div></div></div><div className="row"><button type="button" className="secondary" style={{background:'rgba(255,255,255,.04)',border:'1px solid var(--line)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>setFlip(v=>!v)}>Flip</button><button type="button" className="primary" style={{background:'linear-gradient(135deg,var(--accent),#fff1)',border:'1px solid rgba(255,255,255,.18)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>markLevel('good')}>Got it</button><button type="button" className="secondary" style={{background:'rgba(255,255,255,.04)',border:'1px solid var(--line)',padding:'10px 12px',borderRadius:12,color:'var(--text)',cursor:'pointer'}} onClick={()=>markLevel('review')}>Review</button></div>{message && <div className="status-bar"><span>{message}</span></div>}</div>}
-function Quiz({items,finish}){const [i,setI]=useState(0),[score,setScore]=useState(0),[selected,setSelected]=useState(null),[message,setMessage]=useState(''); const x = items[i]; if (!x) return <div className="glass panel"><div className="small">No quiz items to study.</div></div>; function answer(index){ if (selected !== null) return; setSelected(index); if (index === x.correctIndex) { setScore(s => s + 1); setMessage('Correct!'); buzz(35); } else { setMessage('Not quite — the answer was ' + x.options[x.correctIndex]); buzz(20); } setTimeout(() => { setI(v => { const next = v + 1; if (next >= items.length) return 0; return next; }); setSelected(null); setMessage(''); finish(x, 'quiz'); }, 850); } return <div className="glass panel quiz-card"><div className="status-bar"><span>Question {i + 1} / {items.length}</span><span className="badge">Score {score}</span></div><div className="deck-text">{x.question}</div>{x.options.map((opt,idx)=><button key={idx} type="button" className={`quiz-option ${selected === idx ? 'selected' : ''} ${selected !== null && idx === x.correctIndex ? 'correct' : ''} ${selected !== null && idx === selected && idx !== x.correctIndex ? 'wrong' : ''}`} onClick={()=>answer(idx)} disabled={selected !== null}>{opt}</button>)}{message && <div className="status-bar"><span>{message}</span></div>}</div>}
-function App(){const [mode,setMode]=useState(safeLoad(KEYS.mode,'cards'));const [cards,setCards]=useState(safeLoad(KEYS.cards, []).map((x,i)=> normalizeCard(x,i)).filter(Boolean));const [quiz,setQuiz]=useState(safeLoad(KEYS.quiz, []).map((x,i)=> normalizeQuiz(x,i)).filter(Boolean));const [history,setHistory]=useState(safeLoad(KEYS.history, []).map(normalizeHistory).filter(Boolean));const [notes,setNotes]=useState(safeLoad(KEYS.notes, []).filter(Boolean));const [levels,setLevels]=useState(safeLoad(KEYS.levels, []));const [queue,setQueue]=useState(safeLoad(KEYS.queue, []));const [status,setStatus]=useState(safeLoad(KEYS.status, 'Ready to study'));const [hue,setHue]=useState(Number(safeLoad(KEYS.hue, 270)));const [page,setPage]=useState('builder');const [isPro,setIsPro]=useState(Boolean(safeLoad(KEYS.pro, false)));const [openPro,setOpenPro]=useState(false); useEffect(()=>{document.documentElement.style.setProperty('--hue',hue); safeSave(KEYS.hue,hue);},[hue]); useEffect(()=>{safeSave(KEYS.mode,mode);},[mode]); useEffect(()=>{safeSave(KEYS.cards,cards);},[cards]); useEffect(()=>{safeSave(KEYS.quiz,quiz);},[quiz]); useEffect(()=>{safeSave(KEYS.history,history);},[history]); useEffect(()=>{safeSave(KEYS.notes,notes);},[notes]); useEffect(()=>{safeSave(KEYS.levels,levels);},[levels]); useEffect(()=>{safeSave(KEYS.queue,queue);},[queue]); useEffect(()=>{safeSave(KEYS.status,status);},[status]); useEffect(()=>{safeSave(KEYS.pro,isPro);},[isPro]); useEffect(()=>{if(queue.length === 0 && cards.length){setQueue(cards.map((_,i)=>i));}},[cards,queue]); function clear(){setCards([]);setQuiz([]);setHistory([]);setLevels([]);setQueue([]);setStatus('All cleared.');} function finish(item, type){ const next = addHistory(history, item); setHistory(next); if (type==='card') setStatus('Flashcard reviewed.'); if (type==='quiz') setStatus('Quiz reviewed.'); }
- return <div className="app-shell"><Header name="SabiKard" hue={hue} setHue={setHue} setPage={setPage} page={page}/><Pro isPro={isPro} open={openPro} setOpen={setOpenPro} />{!isPro && openPro===false && <div className="status-bar"><span>Free tier: {LIMIT} items max</span><button type="button" className="page-btn" onClick={()=>setOpenPro(true)}>Unlock Pro</button></div>}<div className="status-bar"><span>{status}</span><button type="button" className="page-btn" onClick={clear}>Clear all</button></div><div className="main"><div className="stack">{page === 'builder' ? <Builder mode={mode} setMode={setMode} cards={cards} setCards={setCards} quiz={quiz} setQuiz={setQuiz} history={history} setHistory={setHistory} isPro={isPro} setPage={setPage} /> : <Cards cards={cards} levels={levels} setLevels={setLevels} queue={queue} setQueue={setQueue} finish={finish} />}<div className="glass panel"><h3 style={{margin:'0 0 10px'}}>Recent history</h3><List items={history} type={history[0]?.type || 'card'} remove={(id)=>setHistory(prev=>prev.filter(x=>x.id!==id))}/></div></div><div className="stack"><div className="glass panel"><h3 style={{margin:'0 0 10px'}}>Quiz practice</h3><Quiz items={quiz} finish={finish} /></div><div className="glass panel"><h3 style={{margin:'0 0 10px'}}>Notes</h3><Notes notes={notes} setNotes={setNotes}/></div></div></div></div> }
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
-</script></body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>SabiKard</title>
+    <style>
+      :root {
+        --hue: 270;
+        --bg: #120b24;
+        --bg-2: #261052;
+        --panel: rgba(255, 255, 255, 0.08);
+        --panel-strong: rgba(255, 255, 255, 0.12);
+        --line: rgba(255, 255, 255, 0.24);
+        --text: #f8f5ff;
+        --muted: rgba(248, 245, 255, 0.75);
+        --soft: rgba(248, 245, 255, 0.52);
+        --accent: hsl(var(--hue) 90% 65%);
+        --accent-strong: hsl(var(--hue) 90% 58%);
+        --success: #7ae8a0;
+        --warning: #ffd68a;
+        --danger: #ff9bab;
+        --shadow: 0 18px 60px rgba(11, 9, 20, 0.45);
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f0ebff;
+          --bg-2: #d5c8f4;
+          --panel: rgba(255, 255, 255, 0.42);
+          --panel-strong: rgba(255, 255, 255, 0.62);
+          --line: rgba(55, 35, 100, 0.18);
+          --text: #251743;
+          --muted: rgba(37, 23, 67, 0.75);
+          --soft: rgba(37, 23, 67, 0.52);
+          --accent: hsl(var(--hue) 80% 55%);
+          --accent-strong: hsl(var(--hue) 80% 48%);
+          --shadow: 0 18px 60px rgba(67, 43, 130, 0.2);
+        }
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background:
+          radial-gradient(circle at top, rgba(255,255,255,.14), transparent 30%),
+          linear-gradient(135deg, var(--bg), var(--bg-2));
+        color: var(--text);
+      }
+
+      body {
+        padding: 28px 18px 40px;
+      }
+
+      button, input, textarea {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
+        transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+      }
+
+      button:hover { transform: translateY(-1px); }
+      button:focus-visible, input:focus-visible, textarea:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .app-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .glass {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 18px 20px;
+        border-radius: 24px;
+        margin-bottom: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        color: white;
+        letter-spacing: 0.06em;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(1.5rem, 2vw, 2.2rem);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .theme-picker {
+        display: flex;
+        gap: 6px;
+        padding: 6px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.04);
+      }
+
+      .swatch {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,0.4);
+        padding: 0;
+      }
+
+      .swatch.active {
+        box-shadow: 0 0 0 2px rgba(255,255,255,0.4);
+      }
+
+      .top-nav {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+
+      .nav-btn {
+        padding: 10px 16px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .nav-btn.active {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: white;
+        border-color: transparent;
+      }
+
+      .panel {
+        border-radius: 24px;
+        padding: 18px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 18px;
+      }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(120px, 1fr));
+        gap: 12px;
+      }
+
+      .stat {
+        border-radius: 18px;
+        padding: 14px 16px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+      }
+
+      .stat-label {
+        display: block;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--soft);
+        margin-bottom: 4px;
+      }
+
+      .stat-value {
+        font-size: clamp(1.2rem, 2vw, 1.8rem);
+        font-weight: 800;
+      }
+
+      .section-title {
+        margin: 0;
+        font-size: 1.15rem;
+      }
+
+      .builder-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .field-group {
+        display: grid;
+        gap: 8px;
+      }
+
+      .field-group label {
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+
+      .field-group input,
+      .field-group textarea {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.04);
+        color: var(--text);
+        padding: 12px 14px;
+      }
+
+      .field-group textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      .option-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .option-row input {
+        flex: 1;
+      }
+
+      .inline-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .primary,
+      .secondary,
+      .danger {
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+      }
+
+      .primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        border-color: transparent;
+        color: white;
+      }
+
+      .secondary { background: rgba(255,255,255,0.04); }
+      .danger { background: rgba(255, 155, 171, 0.12); color: #ffd9df; }
+
+      .list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .list-item {
+        display: grid;
+        gap: 10px;
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+      }
+
+      .list-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .list-title {
+        font-weight: 700;
+      }
+
+      .badge {
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        padding: 6px 10px;
+        background: rgba(255,255,255,0.04);
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .mini-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .mini-actions button {
+        padding: 7px 10px;
+        border-radius: 10px;
+      }
+
+      .card-shell {
+        display: grid;
+        gap: 18px;
+      }
+
+      .card-face {
+        position: relative;
+        min-height: 250px;
+        padding: 22px;
+        border-radius: 22px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+        border: 1px solid var(--line);
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        text-align: center;
+        perspective: 1000px;
+      }
+
+      .card-face-inner {
+        width: 100%;
+        min-height: 210px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        padding: 18px;
+        transition: transform 0.44s ease;
+        transform-style: preserve-3d;
+      }
+
+      .card-face.flipped .card-face-inner {
+        transform: rotateY(180deg);
+      }
+
+      .card-content {
+        position: absolute;
+        inset: 18px;
+        display: grid;
+        place-items: center;
+        backface-visibility: hidden;
+        padding: 18px;
+        text-align: center;
+      }
+
+      .card-content.back {
+        transform: rotateY(180deg);
+      }
+
+      .card-content h3 {
+        margin: 0 0 10px;
+        font-size: clamp(1.2rem, 3vw, 2rem);
+      }
+
+      .card-content p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 1.03rem;
+      }
+
+      .quiz-option {
+        width: 100%;
+        padding: 14px 16px;
+        border-radius: 14px;
+        text-align: left;
+      }
+
+      .quiz-option.correct {
+        border-color: rgba(122, 232, 160, 0.8);
+        background: rgba(122, 232, 160, 0.12);
+      }
+
+      .quiz-option.wrong {
+        border-color: rgba(255, 155, 171, 0.85);
+        background: rgba(255, 155, 171, 0.12);
+      }
+
+      .quiz-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .status-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.95rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+      }
+
+      .flash-cta,
+      .quiz-cta {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .empty {
+        border: 1px dashed var(--line);
+        border-radius: 18px;
+        padding: 24px 18px;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(8, 7, 15, 0.54);
+        display: grid;
+        place-items: center;
+        padding: 18px;
+        z-index: 10;
+      }
+
+      .modal {
+        width: min(440px, 100%);
+        border-radius: 24px;
+        padding: 20px;
+      }
+
+      .modal h3 {
+        margin-top: 0;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .input-row input {
+        flex: 1;
+      }
+
+      .tiny-note {
+        font-size: 0.8rem;
+        color: var(--soft);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 760px) {
+        .builder-grid,
+        .stats-row {
+          grid-template-columns: 1fr;
+        }
+
+        .header {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      (() => {
+        const STORAGE_KEYS = {
+          cards: 'sabikard-cards',
+          quiz: 'sabikard-quizItems',
+          notes: 'sabikard-notes',
+          history: 'sabikard-history',
+          hue: 'sabikard-hue',
+          pro: 'sabikard-pro'
+        };
+
+        const THEME_COLORS = [
+          { value: 270, label: 'Purple' },
+          { value: 220, label: 'Blue' },
+          { value: 185, label: 'Cyan' },
+          { value: 145, label: 'Green' },
+          { value: 315, label: 'Magenta' }
+        ];
+
+        const defaultState = {
+          page: 'dashboard',
+          hue: safeLoad(STORAGE_KEYS.hue, 270),
+          cards: safeLoad(STORAGE_KEYS.cards, [
+            { id: makeId(), front: 'What is the capital of Japan?', back: 'Tokyo.' },
+            { id: makeId(), front: 'What does HTML stand for?', back: 'HyperText Markup Language.' },
+            { id: makeId(), front: 'What is 9 × 9?', back: '81.' }
+          ]).map(normalizeCard).filter(Boolean),
+          quiz: safeLoad(STORAGE_KEYS.quiz, [
+            {
+              id: makeId(),
+              question: 'Which language is used to structure web content?',
+              options: ['CSS', 'HTML', 'JavaScript', 'Python'],
+              correctIndex: 1
+            }
+          ]).map(normalizeQuiz).filter(Boolean),
+          notes: safeLoad(STORAGE_KEYS.notes, []).map(normalizeNote).filter(Boolean),
+          history: safeLoad(STORAGE_KEYS.history, []).map(normalizeHistory).filter(Boolean),
+          isPro: safeLoad(STORAGE_KEYS.pro, false),
+          modalOpen: false,
+          cardFlip: false,
+          cardQueue: [],
+          cardIndex: 0,
+          quizIndex: 0,
+          quizScore: 0,
+          quizSelected: null,
+          quizMessage: '',
+          cardMessage: '',
+          cardMisses: 0,
+          draftCard: { front: '', back: '' },
+          draftQuiz: { question: '', options: ['', '', '', ''], correctIndex: 0 },
+          noteDraft: { title: '', body: '' },
+          editingNoteId: null,
+          builderMode: 'cards'
+        };
+
+        let state = structuredClone(defaultState);
+        let appRoot;
+
+        function safeLoad(key, fallback) {
+          try {
+            const raw = localStorage.getItem(key);
+            if (raw === null) return fallback;
+            return JSON.parse(raw);
+          } catch {
+            return fallback;
+          }
+        }
+
+        function safeSave(key, value) {
+          try {
+            localStorage.setItem(key, JSON.stringify(value));
+            return true;
+          } catch {
+            return false;
+          }
+        }
+
+        function makeId() {
+          if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+            return crypto.randomUUID();
+          }
+          return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+        }
+
+        function sanitizeText(value) {
+          return String(value ?? '').trim();
+        }
+
+        function normalizeCard(item) {
+          const front = sanitizeText(item?.front);
+          const back = sanitizeText(item?.back);
+          if (!front || !back) return null;
+          return {
+            id: item?.id || makeId(),
+            front,
+            back
+          };
+        }
+
+        function normalizeQuiz(item) {
+          const question = sanitizeText(item?.question);
+          const options = Array.isArray(item?.options)
+            ? item.options.map((v) => sanitizeText(v)).filter(Boolean)
+            : [];
+          const correctIndex = Number.isInteger(item?.correctIndex) ? item.correctIndex : 0;
+
+          if (!question || options.length < 2) return null;
+
+          return {
+            id: item?.id || makeId(),
+            question,
+            options: options.slice(0, 4),
+            correctIndex: Math.min(Math.max(correctIndex, 0), Math.max(options.length - 1, 0))
+          };
+        }
+
+        function normalizeNote(item) {
+          if (!item || typeof item !== 'object') return null;
+          const title = sanitizeText(item.title);
+          const body = sanitizeText(item.body);
+          if (!title && !body) return null;
+          return {
+            id: item.id || makeId(),
+            title: title || 'Untitled note',
+            body: body || ''
+          };
+        }
+
+        function normalizeHistory(item) {
+          if (!item || typeof item !== 'object') return null;
+          const type = item.type === 'card' || item.type === 'quiz' ? item.type : 'card';
+          const title = sanitizeText(item.title);
+          if (!title) return null;
+          return {
+            id: item.id || makeId(),
+            type,
+            title,
+            createdAt: item.createdAt || new Date().toISOString()
+          };
+        }
+
+        function persist() {
+          safeSave(STORAGE_KEYS.cards, state.cards);
+          safeSave(STORAGE_KEYS.quiz, state.quiz);
+          safeSave(STORAGE_KEYS.notes, state.notes);
+          safeSave(STORAGE_KEYS.history, state.history);
+          safeSave(STORAGE_KEYS.hue, state.hue);
+          safeSave(STORAGE_KEYS.pro, state.isPro);
+        }
+
+        function addHistoryRecord(type, title) {
+          const record = normalizeHistory({ id: makeId(), type, title, createdAt: new Date().toISOString() });
+          if (!record) return;
+          state.history = [record, ...state.history.filter((item) => item.id !== record.id)].slice(0, 30);
+          persist();
+        }
+
+        function buildQueue() {
+          const cards = state.cards.slice();
+          for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+          }
+          state.cardQueue = cards;
+          state.cardIndex = 0;
+          state.cardFlip = false;
+          state.cardMessage = '';
+          state.cardMisses = 0;
+        }
+
+        function nextCard() {
+          if (!state.cardQueue.length) {
+            state.cardIndex = 0;
+            state.cardFlip = false;
+            return;
+          }
+          if (state.cardIndex >= state.cardQueue.length) {
+            buildQueue();
+          }
+          state.cardFlip = false;
+          state.cardMessage = '';
+          state.cardIndex = Math.min(state.cardIndex, state.cardQueue.length - 1);
+          render();
+        }
+
+        function currentCard() {
+          if (!state.cardQueue.length) return null;
+          return state.cardQueue[state.cardIndex] || null;
+        }
+
+        function evaluateCard(outcome) {
+          const card = currentCard();
+          if (!card) return;
+
+          if (outcome === 'know') {
+            state.cardMessage = 'Nice work — that one is locked in.';
+            addHistoryRecord('card', card.front);
+          } else {
+            state.cardMessage = 'Good review cue — try it again soon.';
+            state.cardMisses += 1;
+          }
+
+          state.cardIndex += 1;
+          if (state.cardIndex >= state.cardQueue.length) {
+            buildQueue();
+          } else {
+            state.cardFlip = false;
+          }
+          render();
+        }
+
+        function handleCardAdd() {
+          const front = sanitizeText(state.draftCard.front);
+          const back = sanitizeText(state.draftCard.back);
+          if (!front || !back) return;
+
+          const card = normalizeCard({ id: makeId(), front, back });
+          if (!card) return;
+
+          state.cards = [card, ...state.cards];
+          state.draftCard = { front: '', back: '' };
+          persist();
+          render();
+        }
+
+        function handleQuizAdd() {
+          const question = sanitizeText(state.draftQuiz.question);
+          const options = state.draftQuiz.options.map((value) => sanitizeText(value));
+          if (!question || options.some((value) => !value)) return;
+
+          const quiz = normalizeQuiz({
+            id: makeId(),
+            question,
+            options: options.slice(0, 4),
+            correctIndex: state.draftQuiz.correctIndex
+          });
+
+          if (!quiz) return;
+          state.quiz = [quiz, ...state.quiz];
+          state.draftQuiz = { question: '', options: ['', '', '', ''], correctIndex: 0 };
+          state.page = 'dashboard';
+          persist();
+          render();
+        }
+
+        function handleNoteSave() {
+          const title = sanitizeText(state.noteDraft.title);
+          const body = sanitizeText(state.noteDraft.body);
+          if (!title && !body) return;
+
+          if (state.editingNoteId) {
+            state.notes = state.notes.map((note) =>
+              note.id === state.editingNoteId ? { ...note, title: title || 'Untitled note', body } : note
+            );
+          } else {
+            state.notes = [
+              normalizeNote({ id: makeId(), title: title || 'Untitled note', body }),
+              ...state.notes
+            ].filter(Boolean);
+          }
+
+          state.noteDraft = { title: '', body: '' };
+          state.editingNoteId = null;
+          persist();
+          render();
+        }
+
+        function handleNoteDelete(id) {
+          state.notes = state.notes.filter((note) => note.id !== id);
+          persist();
+          render();
+        }
+
+        function handleNoteEdit(note) {
+          state.editingNoteId = note.id;
+          state.noteDraft = { title: note.title, body: note.body };
+          state.page = 'notes';
+          render();
+        }
+
+        function handleQuizSubmit() {
+          if (state.quizSelected === null || !state.quiz.length) return;
+
+          const item = state.quiz[state.quizIndex];
+          const isCorrect = state.quizSelected === item.correctIndex;
+
+          state.quizMessage = isCorrect ? 'Correct — nice memory.' : `Not quite — the right answer is: ${item.options[item.correctIndex]}`;
+          state.quizScore += isCorrect ? 1 : 0;
+
+          const nextIndex = state.quizIndex + 1;
+          if (nextIndex >= state.quiz.length) {
+            state.quizIndex = 0;
+            state.quizSelected = null;
+            state.quizMessage = `Session complete — ${state.quizScore} / ${state.quiz.length} correct.`;
+            state.quizScore = 0;
+          } else {
+            state.quizIndex = nextIndex;
+            state.quizSelected = null;
+          }
+
+          render();
+        }
+
+        function renderHeader() {
+          return `
+            <header class="header glass">
+              <div class="brand">
+                <div class="brand-badge">S</div>
+                <h1>SabiKard</h1>
+              </div>
+              <div class="header-actions">
+                <div class="theme-picker" aria-label="Color theme picker">
+                  ${THEME_COLORS.map((color) => `
+                    <button
+                      type="button"
+                      class="swatch ${state.hue === color.value ? 'active' : ''}"
+                      data-action="set-hue"
+                      data-hue="${color.value}"
+                      style="background:${hsl(color.value)}"
+                      aria-label="Use ${color.label} theme"
+                    ></button>
+                  `).join('')}
+                </div>
+                <button type="button" class="primary" data-action="toggle-pro">
+                  ${state.isPro ? 'Pro unlocked ✨' : 'Unlock Pro'}
+                </button>
+              </div>
+            </header>
+          `;
+        }
+
+        function hsl(value) {
+          return `hsl(${value} 90% 60%)`;
+        }
+
+        function renderNav() {
+          const pages = [
+            { id: 'dashboard', label: 'Dashboard' },
+            { id: 'study', label: 'Study' },
+            { id: 'quiz', label: 'Quiz' },
+            { id: 'notes', label: 'Notes' }
+          ];
+
+          return `
+            <nav class="top-nav" aria-label="Main navigation">
+              ${pages.map((page) => `
+                <button
+                  type="button"
+                  class="nav-btn ${state.page === page.id ? 'active' : ''}"
+                  data-action="set-page"
+                  data-page="${page.id}"
+                >
+                  ${page.label}
+                </button>
+              `).join('')}
+            </nav>
+          `;
+        }
+
+        function renderStats() {
+          const totalCards = state.cards.length;
+          const totalQuiz = state.quiz.length;
+          const totalNotes = state.notes.length;
+          const recent = state.history.length;
+
+          return `
+            <section class="stats-row" aria-label="Study statistics">
+              <div class="stat glass">
+                <span class="stat-label">Cards</span>
+                <span class="stat-value">${totalCards}</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat-label">Quiz</span>
+                <span class="stat-value">${totalQuiz}</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat-label">Notes</span>
+                <span class="stat-value">${totalNotes}</span>
+              </div>
+              <div class="stat glass">
+                <span class="stat-label">Recent</span>
+                <span class="stat-value">${recent}</span>
+              </div>
+            </section>
+          `;
+        }
+
+        function renderDashboard() {
+          const item = currentCard();
+          return `
+            <section class="panel glass stack">
+              <div class="status-line">
+                <h2 class="section-title">Dashboard</h2>
+                <span>${state.cards.length} total cards</span>
+              </div>
+              ${renderStats()}
+              <div class="inline-actions">
+                <button type="button" class="primary" data-action="set-page" data-page="study">Start studying</button>
+                <button type="button" class="secondary" data-action="set-page" data-page="quiz">Take quiz</button>
+                <button type="button" class="secondary" data-action="build-demo">Generate sample set</button>
+              </div>
+              <div class="list">
+                <div class="list-item">
+                  <div class="list-meta">
+                    <div class="list-title">Recent activity</div>
+                    <span class="badge">${state.history.length} items</span>
+                  </div>
+                  ${state.history.length ? state.history.map((entry) => `
+                    <div class="tiny-note">${entry.type === 'quiz' ? 'Quiz' : 'Card'} • ${entry.title}</div>
+                  `).join('') : '<div class="tiny-note">No study activity yet.</div>'}
+                </div>
+              </div>
+            </section>
+          `;
+        }
+
+        function renderStudySection() {
+          const card = currentCard();
+          const queueCount = state.cardQueue.length ? state.cardQueue.length - state.cardIndex : 0;
+
+          if (!state.cardQueue.length && !state.cards.length) {
+            return `
+              <section class="panel glass stack">
+                <h2 class="section-title">Study</h2>
+                <div class="empty">Add a flashcard to begin studying.</div>
+              </section>
+            `;
+          }
+
+          return `
+            <section class="panel glass stack">
+              <div class="status-line">
+                <h2 class="section-title">Study</h2>
+                <span>${queueCount} remaining</span>
+              </div>
+
+              ${card ? `
+                <div class="card-shell">
+                  <div class="card-face ${state.cardFlip ? 'flipped' : ''}" data-action="flip-card" aria-live="polite">
+                    <div class="card-face-inner">
+                      <div class="card-content front">
+                        <h3>${escapeHtml(card.front)}</h3>
+                      </div>
+                      <div class="card-content back">
+                        <p>${escapeHtml(card.back)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="status-line">
+                    <span>${state.cardMessage || 'Tap the card to reveal the answer.'}</span>
+                    <span class="badge">Misses: ${state.cardMisses}</span>
+                  </div>
+
+                  <div class="flash-cta">
+                    <button type="button" class="primary" data-action="card-know">I knew it</button>
+                    <button type="button" class="secondary" data-action="card-review">Review later</button>
+                  </div>
+                </div>
+              ` : `
+                <div class="empty">No cards left in this session. Start a fresh queue.</div>
+              `}
+            </section>
+          `;
+        }
+
+        function renderQuizSection() {
+          if (!state.quiz.length) {
+            return `
+              <section class="panel glass stack">
+                <h2 class="section-title">Quiz</h2>
+                <div class="empty">Add at least one question to start quizzing.</div>
+              </section>
+            `;
+          }
+
+          const item = state.quiz[state.quizIndex];
+
+          return `
+            <section class="panel glass stack">
+              <div class="status-line">
+                <h2 class="section-title">Quiz</h2>
+                <span>Question ${state.quizIndex + 1} / ${state.quiz.length}</span>
+              </div>
+
+              <div class="list-item">
+                <div class="list-title">${escapeHtml(item.question)}</div>
+                <div class="quiz-grid">
+                  ${item.options.map((option, index) => `
+                    <button
+                      type="button"
+                      class="quiz-option ${state.quizSelected === index ? 'selected' : ''}"
+                      data-action="select-answer"
+                      data-answer="${index}"
+                    >
+                      ${escapeHtml(option)}
+                    </button>
+                  `).join('')}
+                </div>
+                <div class="quiz-cta">
+                  <button type="button" class="primary" data-action="submit-answer">Check answer</button>
+                  <button type="button" class="secondary" data-action="reset-quiz">Restart</button>
+                </div>
+                <div class="tiny-note" aria-live="polite">${state.quizMessage || 'Choose the best answer.'}</div>
+              </div>
+            </section>
+          `;
+        }
+
+        function renderNotesSection() {
+          return `
+            <section class="panel glass stack">
+              <div class="status-line">
+                <h2 class="section-title">Notes</h2>
+                <span>${state.notes.length} saved</span>
+              </div>
+
+              <div class="builder-grid">
+                <div class="field-group">
+                  <label for="note-title">Title</label>
+                  <input id="note-title" type="text" value="${escapeAttribute(state.noteDraft.title)}" data-field="note-title" />
+                </div>
+                <div class="field-group">
+                  <label for="note-body">Body</label>
+                  <textarea id="note-body" data-field="note-body">${escapeHtml(state.noteDraft.body)}</textarea>
+                </div>
+              </div>
+
+              <div class="inline-actions">
+                <button type="button" class="primary" data-action="save-note">${state.editingNoteId ? 'Update note' : 'Save note'}</button>
+                ${state.editingNoteId ? '<button type="button" class="secondary" data-action="cancel-edit-note">Cancel</button>' : ''}
+              </div>
+
+              <div class="list">
+                ${state.notes.length ? state.notes.map((note) => `
+                  <div class="list-item">
+                    <div class="list-meta">
+                      <div class="list-title">${escapeHtml(note.title)}</div>
+                      <div class="mini-actions">
+                        <button type="button" data-action="edit-note" data-id="${note.id}">Edit</button>
+                        <button type="button" data-action="delete-note" data-id="${note.id}">Delete</button>
+                      </div>
+                    </div>
+                    <div class="tiny-note">${escapeHtml(note.body || 'No body yet.')}</div>
+                  </div>
+                `).join('') : '<div class="empty">No notes yet.</div>'}
+              </div>
+            </section>
+          `;
+        }
+
+        function renderBuilderSection() {
+          const isCards = state.builderMode === 'cards';
+
+          return `
+            <section class="panel glass stack">
+              <div class="status-line">
+                <h2 class="section-title">Create</h2>
+                <div class="inline-actions">
+                  <button type="button" class="nav-btn ${isCards ? 'active' : ''}" data-action="set-builder-mode" data-mode="cards">Flashcards</button>
+                  <button type="button" class="nav-btn ${!isCards ? 'active' : ''}" data-action="set-builder-mode" data-mode="quiz">Quiz</button>
+                </div>
+              </div>
+
+              ${isCards ? `
+                <div class="builder-grid">
+                  <div class="field-group">
+                    <label for="card-front">Front</label>
+                    <textarea id="card-front" data-field="card-front">${escapeHtml(state.draftCard.front)}</textarea>
+                  </div>
+                  <div class="field-group">
+                    <label for="card-back">Back</label>
+                    <textarea id="card-back" data-field="card-back">${escapeHtml(state.draftCard.back)}</textarea>
+                  </div>
+                </div>
+                <div class="inline-actions">
+                  <button type="button" class="primary" data-action="add-card">Add flashcard</button>
+                </div>
+              ` : `
+                <div class="builder-grid">
+                  <div class="field-group" style="grid-column: 1 / -1;">
+                    <label for="quiz-question">Question</label>
+                    <textarea id="quiz-question" data-field="quiz-question">${escapeHtml(state.draftQuiz.question)}</textarea>
+                  </div>
+                  ${state.draftQuiz.options.map((option, index) => `
+                    <div class="field-group">
+                      <label for="quiz-option-${index}">Option ${index + 1}</label>
+                      <input id="quiz-option-${index}" type="text" value="${escapeAttribute(option)}" data-field="quiz-option-${index}" />
+                    </div>
+                  `).join('')}
+                  <div class="field-group" style="grid-column: 1 / -1;">
+                    <label for="quiz-correct">Correct answer index</label>
+                    <input id="quiz-correct" type="number" min="0" max="3" step="1" value="${state.draftQuiz.correctIndex}" data-field="quiz-correct" />
+                  </div>
+                </div>
+                <div class="inline-actions">
+                  <button type="button" class="primary" data-action="add-quiz">Add question</button>
+                </div>
+              `}
+            </section>
+          `;
+        }
+
+        function renderProModal() {
+          if (!state.modalOpen) return '';
+          return `
+            <div class="modal-backdrop" data-action="close-pro-modal">
+              <div class="modal glass" role="dialog" aria-modal="true" aria-labelledby="pro-title" onclick="event.stopPropagation()">
+                <h3 id="pro-title">Unlock Pro</h3>
+                <p class="tiny-note">Enter the access code to unlock premium study features.</p>
+                <div class="input-row">
+                  <input id="pro-code" type="text" placeholder="Enter code" aria-label="Pro access code" />
+                  <button type="button" class="primary" data-action="submit-pro-code">Unlock</button>
+                </div>
+                <p class="tiny-note">Demo code: <strong>SABI-7F3K9Q</strong></p>
+              </div>
+            </div>
+          `;
+        }
+
+        function renderApp() {
+          document.documentElement.style.setProperty('--hue', state.hue);
+          const pageContent = (() => {
+            if (state.page === 'study') return renderStudySection();
+            if (state.page === 'quiz') return renderQuizSection();
+            if (state.page === 'notes') return renderNotesSection();
+            return renderDashboard();
+          })();
+
+          appRoot.innerHTML = `
+            ${renderHeader()}
+            ${renderNav()}
+            ${renderBuilderSection()}
+            ${pageContent}
+            ${renderProModal()}
+          `;
+        }
+
+        function escapeHtml(value) {
+          return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+
+        function escapeAttribute(value) {
+          return escapeHtml(value).replace(/`/g, '&#96;');
+        }
+
+        function applyDraftField(name, value) {
+          if (name === 'card-front') state.draftCard.front = value;
+          if (name === 'card-back') state.draftCard.back = value;
+          if (name === 'quiz-question') state.draftQuiz.question = value;
+          if (name === 'quiz-correct') {
+            const next = Number(value) || 0;
+            state.draftQuiz.correctIndex = Math.min(Math.max(next, 0), 3);
+          }
+          if (name.startsWith('quiz-option-')) {
+            const idx = Number(name.split('-').pop());
+            state.draftQuiz.options[idx] = value;
+          }
+          if (name === 'note-title') state.noteDraft.title = value;
+          if (name === 'note-body') state.noteDraft.body = value;
+        }
+
+        function setupEvents() {
+          appRoot.addEventListener('click', (event) => {
+            const actionEl = event.target.closest('[data-action]');
+            if (!actionEl) return;
+
+            const action = actionEl.dataset.action;
+
+            if (action === 'set-page') {
+              state.page = actionEl.dataset.page;
+              renderApp();
+              return;
+            }
+
+            if (action === 'set-builder-mode') {
+              state.builderMode = actionEl.dataset.mode;
+              renderApp();
+              return;
+            }
+
+            if (action === 'set-hue') {
+              state.hue = Number(actionEl.dataset.hue);
+              persist();
+              renderApp();
+              return;
+            }
+
+            if (action === 'toggle-pro') {
+              state.modalOpen = true;
+              renderApp();
+              return;
+            }
+
+            if (action === 'close-pro-modal') {
+              state.modalOpen = false;
+              renderApp();
+              return;
+            }
+
+            if (action === 'submit-pro-code') {
+              const input = document.getElementById('pro-code');
+              const code = sanitizeText(input?.value || '');
+              state.isPro = code === 'SABI-7F3K9Q';
+              state.modalOpen = false;
+              persist();
+              renderApp();
+              return;
+            }
+
+            if (action === 'build-demo') {
+              state.cards = [
+                { id: makeId(), front: 'What is CSS used for?', back: 'Styling the visual appearance of a webpage.' },
+                { id: makeId(), front: 'What does API stand for?', back: 'Application Programming Interface.' },
+                { id: makeId(), front: 'What is a variable in JavaScript?', back: 'A container used to store data values.' }
+              ];
+              state.quiz = [
+                { id: makeId(), question: 'Which language controls layout and style?', options: ['HTML', 'CSS', 'SQL', 'Node'], correctIndex: 1 },
+                { id: makeId(), question: 'What does DOM stand for?', options: ['Document Object Model', 'Dynamic Object Model', 'Data Object Matrix', 'Document Output Manager'], correctIndex: 0 }
+              ];
+              state.page = 'dashboard';
+              persist();
+              renderApp();
+              return;
+            }
+
+            if (action === 'add-card') {
+              handleCardAdd();
+              return;
+            }
+
+            if (action === 'add-quiz') {
+              handleQuizAdd();
+              return;
+            }
+
+            if (action === 'save-note') {
+              handleNoteSave();
+              return;
+            }
+
+            if (action === 'cancel-edit-note') {
+              state.editingNoteId = null;
+              state.noteDraft = { title: '', body: '' };
+              renderApp();
+              return;
+            }
+
+            if (action === 'edit-note') {
+              const note = state.notes.find((item) => item.id === actionEl.dataset.id);
+              if (note) handleNoteEdit(note);
+              return;
+            }
+
+            if (action === 'delete-note') {
+              handleNoteDelete(actionEl.dataset.id);
+              return;
+            }
+
+            if (action === 'flip-card') {
+              state.cardFlip = !state.cardFlip;
+              renderApp();
+              return;
+            }
+
+            if (action === 'card-know') {
+              evaluateCard('know');
+              return;
+            }
+
+            if (action === 'card-review') {
+              evaluateCard('review');
+              return;
+            }
+
+            if (action === 'select-answer') {
+              state.quizSelected = Number(actionEl.dataset.answer);
+              renderApp();
+              return;
+            }
+
+            if (action === 'submit-answer') {
+              handleQuizSubmit();
+              return;
+            }
+
+            if (action === 'reset-quiz') {
+              state.quizIndex = 0;
+              state.quizScore = 0;
+              state.quizSelected = null;
+              state.quizMessage = '';
+              renderApp();
+            }
+          });
+
+          appRoot.addEventListener('input', (event) => {
+            const target = event.target;
+            const field = target.dataset.field;
+            if (!field) return;
+            applyDraftField(field, target.value);
+          });
+        }
+
+        function init() {
+          appRoot = document.getElementById('app');
+          if (!appRoot) return;
+          if (!state.cardQueue.length) buildQueue();
+          setupEvents();
+          renderApp();
+        }
+
+        init();
+      })();
+    </script>
+  </body>
+</html>
